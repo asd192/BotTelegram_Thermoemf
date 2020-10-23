@@ -1,17 +1,24 @@
-# термопары типа L
-# от минус 200°С до 0°С
-kA = (-0.000004162693, 0.06331088, 0.000060118088, -0.000000079469796, 9.3101891E-11, -2.429963E-14, -2.6547176E-16, 4.4332477E-19, -2.1172626E-22)
-kC = (311.16085, 15.632542, -0.228131, 0.016061658, -0.0012036818000000001, 5.7602230000000004e-05, -1.6144583999999998e-06, 2.5988756999999997e-08, -2.2286755000000002e-10, 7.8910747e-13)
+import coefficients as c
 
-kA = [-2.69834238e-14,  8.33866905e-12, -1.07700502e-09,  7.52740196e-08, -3.08135934e-06,  7.50603252e-05, -1.09632555e-03,  1.21669875e-02, -2.19720551e-01,  1.58534782e+01,  2.65461545e-01]
-kC = [-2.69834238e-14,  8.33866905e-12, -1.07700502e-09,  7.52740196e-08, -3.08135934e-06,  7.50603252e-05, -1.09632555e-03,  1.21669875e-02, -2.19720551e-01,  1.58534782e+01,  2.65461545e-01]
 
-# t = 800
-# print(kA[0] * t**0 + kA[1] * t**1 + kA[2] * t**2 + kA[3] * t**3 + kA[4] * t**4 + kA[5] * t**5 + kA[6] * t**6 + kA[7] * t**7 + kA[8] * t**8)
-#
-mV = 6.862
-print(kC[0] * mV**0 + kC[1] * mV**1 + kC[2] * mV**2 + kC[3] * mV**3 + kC[4] * mV**4 + kC[5] * mV**5 + kC[6] * mV**6 + kC[7] * mV**7 + kC[8] * mV**8 + kC[9] * mV**9)
+def calc_tp(graduation, value):
+    """сборка имен ключей словаря coefficients"""
+    k_interval, coeff = '', ''
 
-t = 250
-result = [i * t ** n for n, i in enumerate(kA)]
-print(sum(result))
+    if value <= 0:
+        coeff = 'Neg'
+        negative = True
+    if value > 0:
+        coeff = 'Pos'
+
+    if type(value) is int:
+        k = f"{graduation}_type_{coeff}_kA"
+        print(k)
+        return c.calc_poly_kA(value, k)
+    if type(value) is float:
+        k = f"{graduation}_type_{coeff}_kC"
+        print(k)
+        return c.calc_poly_kC(value, k, negative)
+
+
+print(calc_tp('L', -9.488))

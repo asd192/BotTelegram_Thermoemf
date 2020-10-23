@@ -1,7 +1,7 @@
 import numpy as np
 
 # массив температур для требуемых ТП
-temperature = np.array([t for t in range(1002)])
+temperature = np.array([t for t in range(800)])
 
 # массив значений температур в mV
 with open("L_EDS.txt") as file:
