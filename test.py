@@ -1,31 +1,7 @@
-import numpy as np
-
-# массив температур для требуемых ТП
-temperature = np.array([t for t in range(1002)])
-
-# массив значений температур в mV
-with open("L_EDS.txt") as file:
-    s = file.read()
-t_in_mV = np.array(sorted(map(float, s.split())))
-print(len(t_in_mV))
-# количество коэффициентов
-q_k = 9
-
-# извлечение коэффициентов
-k_poly = np.polyfit(t_in_mV, temperature, q_k)
-print(k_poly)
+# print(', '.join("""-2.14300492e-22, 4.52592512e-19, -2.79152675e-16, -1.36314288e-14, 8.83859264e-11, -7.82928338e-08, 5.99633047e-05, 6.33198398e-02, -1.40098253e-04""".split(',')[::-1]))
 
 
-def calc_poly(x, a):
-    """расчёт полинома"""
-    y = 0
-    for i in range(q_k + 1):
-        y += a[i] * x ** (q_k - i)
-    return y
 
+t = (-200, 0, 1)
+print(-198 in list(range(t[0], t[1])))
 
-# получение температуры из mV
-mV = 40.299
-t_target = calc_poly(mV, k_poly)
-
-print(mV, '<—>', t_target)

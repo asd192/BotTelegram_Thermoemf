@@ -1,4 +1,4 @@
-import coefficients as c
+import coefficients1 as c
 
 
 def calc_tp(graduation, value):
@@ -21,4 +21,4 @@ def calc_tp(graduation, value):
         return c.calc_poly_kC(value, k, negative)
 
 
-print(calc_tp('L', -9.488))
+print(calc_tp('K', -270))
