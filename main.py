@@ -1,9 +1,15 @@
+import math
 from coefficients import coeff
 
 
-def polinom(value, coeff_coeff):
-    """ Расчет полинома """
-    polinom = round(sum([k * (value) ** n for n, k in enumerate(coeff_coeff)]), 3)
+def polinom(value, coeff_coeff, K_Type):
+    """ Расчёт полинома """
+    if not K_Type:
+        polinom = round(sum([k * (value) ** n for n, k in enumerate(coeff_coeff)]), 3)
+    else:
+        print('Type_K')
+        polinom = round(sum([k * (value) ** n + (0.1185976 * math.exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]), 3)
+
     return f"{polinom}"
 
 
@@ -15,9 +21,8 @@ def coeff_tp(graduation, value):
     elif type(value) is float:
         coeff_type = 'mV'
 
-    # определение требуемых коэффициентов
+    # коэффициенты если значение в границах по ГОСТ
     for i_coeff in coeff[graduation][coeff_type].values():
-        # если значение в границах по ГОСТ
         if i_coeff[0][0] <= value <= i_coeff[0][1]:
             coeff_coeff = i_coeff[1]
             not_found = False
@@ -25,7 +30,7 @@ def coeff_tp(graduation, value):
         else:
             not_found = True
 
-    # если значение за границами по ГОСТ
+    # коэффициенты если значение за границами по ГОСТ
     if not_found == True:
         min_low = coeff[graduation][coeff_type]['low'][0][0]
         max_high = coeff[graduation][coeff_type]['high'][0][1]
@@ -35,19 +40,18 @@ def coeff_tp(graduation, value):
         if value >= max_high:
             coeff_coeff = coeff[graduation][coeff_type]['high'][1]
 
+    # расчет полинома
+    if graduation == 'K' and 0 <= value <= 1372:
+        K_type = True
+    else:
+        K_type = False
+    poly = polinom(value, coeff_coeff, K_type)
 
-    poly = polinom(value, coeff_coeff)
-
+    # сбор сообщения для отправки пользователю
     message = 'за пределами ГОСТ'
-    result = f"{poly}({graduation}) {message if not_found == True else ''}"
+    result = f"{poly}({graduation}) {message if not_found else ''}"
 
     return result
 
 
-print(coeff_tp('L', -201))
-
-# print(coeff['L']['T'])
-# g = 'L'
-# k = 'T'
-# for i in coeff[g][k].values():
-#     print(i[0])
+print(coeff_tp('K', 600))
