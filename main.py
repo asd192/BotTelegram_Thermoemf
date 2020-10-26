@@ -5,12 +5,12 @@ from coefficients import coeff
 def polinom(value, coeff_coeff, K_Type):
     """ Расчёт полинома """
     if not K_Type:
-        polinom = round(sum([k * (value) ** n for n, k in enumerate(coeff_coeff)]), 3)
+        polinom = [k * (value) ** n for n, k in enumerate(coeff_coeff)]
     else:
         print('Type_K')
-        polinom = round(sum([k * (value) ** n + (0.1185976 * math.exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]), 3)
+        polinom = [k * (value) ** n + (0.1185976 * math.exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
 
-    return f"{polinom}"
+    return f"{round(sum(polinom), 3)}"
 
 
 def coeff_tp(graduation, value):
@@ -41,10 +41,11 @@ def coeff_tp(graduation, value):
             coeff_coeff = coeff[graduation][coeff_type]['high'][1]
 
     # расчет полинома
-    if graduation == 'K' and 0 <= value <= 1372:
+    if graduation == 'K' and 500 <= value <= 1372 and coeff_type == 'T':
         K_type = True
     else:
         K_type = False
+
     poly = polinom(value, coeff_coeff, K_type)
 
     # сбор сообщения для отправки пользователю
@@ -53,5 +54,5 @@ def coeff_tp(graduation, value):
 
     return result
 
-
-print(coeff_tp('K', 600))
+# TODO mV-low coeff не подходят
+print(coeff_tp('K', -1.889))

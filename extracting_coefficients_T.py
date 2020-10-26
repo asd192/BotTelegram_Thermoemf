@@ -2,7 +2,7 @@
 import numpy as np
 
 # массив температур для требуемых ТП
-temperature = np.array([t for t in range(501)])
+temperature = np.array([t for t in range(500, 1373, 1)])
 
 # массив значений температур в mV
 with open("L_EDS.txt") as file:
@@ -11,7 +11,7 @@ t_in_mV = np.array(sorted(map(float, s.split())))
 print(len(t_in_mV))
 
 # количество коэффициентов
-q_k = 9
+q_k = 6
 
 # извлечение коэффициентов
 k_poly = np.polyfit(temperature, t_in_mV, q_k)
@@ -26,7 +26,7 @@ def calc_poly(x, a):
     return y
 
 
-# получение температуры из mV
+# получение mV температуры
 t = 500
 t_target = calc_poly(t, k_poly)
 
