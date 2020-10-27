@@ -5,7 +5,7 @@ import numpy as np
 temperature = np.array([t for t in range(-200, 1, 1)])
 
 # массив значений температур в mV
-with open("L_EDS.txt") as file:
+with open("EDS_mV.txt") as file:
     s = file.read()
 t_in_mV = np.array(sorted(map(float, s.split())))
 print(len(t_in_mV))

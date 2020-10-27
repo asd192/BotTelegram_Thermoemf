@@ -5,7 +5,7 @@ import numpy as np
 temperature = np.array([t for t in range(500, 1373, 1)])
 
 # массив значений температур в mV
-with open("L_EDS.txt") as file:
+with open("EDS_mV.txt") as file:
     s = file.read()
 t_in_mV = np.array(sorted(map(float, s.split())))
 print(len(t_in_mV))
@@ -26,7 +26,7 @@ def calc_poly(x, a):
     return y
 
 
-# получение mV температуры
+# получение mV из температуры
 t = 500
 t_target = calc_poly(t, k_poly)
 
