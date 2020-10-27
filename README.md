@@ -14,6 +14,9 @@
 
 <h3>Тестирование</h3>
 <p>
-<b>test_main.py</b> — тестирование преобразуемых значений<br>
+<b>test_main.py</b> <br>
 </p>
-<pre>pytest --reruns 1 -s -v --tb=line test_main.py</pre>
+Тестирование преобразуемых значений ТП
+<pre>pytest -m tp --reruns 1 -s -v --tb=line test_main.py</pre>
+Тестирование преобразуемых значений ТСМ
+<pre>pytest -m tsm --reruns 1 -s -v --tb=line test_main.py</pre>
