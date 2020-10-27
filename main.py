@@ -49,10 +49,9 @@ def coeff_tp(graduation, value):
     poly = polinom(value, coeff_coeff, K_type)
 
     # сбор сообщения для отправки пользователю
-    message = 'за пределами ГОСТ'
+    message = '- за пределами ГОСТ'
     result = f"{poly}({graduation}) {message if not_found else ''}"
 
     return result
 
-# TODO mV-low coeff не подходят
-print(coeff_tp('K', -1.889))
+print(coeff_tp('K', -5.892))
