@@ -1,5 +1,5 @@
 import math
-from coefficients import coeff
+from coefficients import coefficients
 
 
 def polinom(value, coeff_coeff, K_Type):
@@ -20,38 +20,32 @@ def coeff_tp(graduation, value):
         coeff_type = 'T'
     elif type(value) is float:
         coeff_type = 'mV'
+    else:
+        return "Я так не понимаю. Смотри как нужно - К 100 или К 20.452 и т.п.."
 
-    # коэффициенты если значение в границах по ГОСТ
-    for i_coeff in coeff[graduation][coeff_type].values():
-        if i_coeff[0][0] <= value <= i_coeff[0][1]:
-            coeff_coeff = i_coeff[1]
-            not_found = False
+    # определение необходимых коэффициентов
+    found = False
+    for interval, coeff in coefficients[graduation][coeff_type].items():
+        if interval[0] <= value <= interval[1]:
+            coeff_coeff = coeff
+            found = True
             break
-        else:
-            not_found = True
 
-    # коэффициенты если значение за границами по ГОСТ
-    if not_found == True:
-        min_low = coeff[graduation][coeff_type]['low'][0][0]
-        max_high = coeff[graduation][coeff_type]['high'][0][1]
+    if not found:
+        return "Значение за пределами ГОСТ"
 
-        if value <= min_low:
-            coeff_coeff = coeff[graduation][coeff_type]['low'][1]
-        if value >= max_high:
-            coeff_coeff = coeff[graduation][coeff_type]['high'][1]
-
-    # расчет полинома
+    # проверка если градуировка типа К(ХА)
     if graduation == 'K' and 500 <= value <= 1372 and coeff_type == 'T':
         K_type = True
     else:
         K_type = False
 
+    # расчет полинома
     poly = polinom(value, coeff_coeff, K_type)
 
     # сбор сообщения для отправки пользователю
-    message = '- за пределами ГОСТ'
-    result = f"{poly}({graduation}) {message if not_found else ''}"
+    result = f"{poly}({graduation})"
 
     return result
 
-print(coeff_tp('K', -5.892))
+print(coeff_tp('R', 11.442))
