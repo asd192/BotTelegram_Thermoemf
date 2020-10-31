@@ -10,7 +10,7 @@ def polinom(value, coeff_coeff, K_Type):
         print('Type_K')
         polinom = [k * (value) ** n + (0.1185976 * math.exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
 
-    return f"{round(math.fsum(polinom), 3)}"
+    return f"{round(sum(polinom), 3)}"
 
 
 def coeff_tp(graduation, value):
@@ -48,4 +48,5 @@ def coeff_tp(graduation, value):
 
     return result
 
-print(coeff_tp('T', 20.872))
+print(coeff_tp('E', -9.835))
+print(coeff_tp('E', -270))
