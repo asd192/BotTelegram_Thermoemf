@@ -48,5 +48,5 @@ def coeff_tp(graduation, value):
 
     return result
 
-print(coeff_tp('N', 47.513))
-print(coeff_tp('N', 1300))
+print(coeff_tp('M', -6.154))
+print(coeff_tp('M', -200))
