@@ -48,4 +48,4 @@ def coeff_tp(graduation, value):
 
     return result
 
-print(coeff_tp('K', 600))
+print(coeff_tp('J', -8.095))
