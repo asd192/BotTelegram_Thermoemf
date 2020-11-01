@@ -1,4 +1,8 @@
-""" Коэффициенты для термопар типов R, S, В, J, Т, Е, K, N, А, L, М """
+"""
+Коэффициенты для термопар типов R, S, В, J, Т, Е, K, N, А, L, М по ГОСТ 8.585-2001
+Метка "не ГОСТ" - рассчеты extracting_coefficients_mV.py, extracting_coefficients_T.py
+"""
+
 coefficients = {
     'L': {
         'T': {
