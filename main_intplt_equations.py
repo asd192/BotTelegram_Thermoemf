@@ -49,20 +49,27 @@ class Temperature:
         Rt = R0 * (1 + A * t + B * t ** 2 + C * (t - 100) * t ** 2)
         return Rt
 
-    coeff = {'Pt385': Pt385}
+    coeff = {'Pt385': Pt385, 'Pt391': Pt391, 'Cu426': Cu426, 'Cu428': Cu428, 'Ni617': Ni617}
+
 
 class Resist:
-    def Pt385(t, R0=100):
-        """ Платиновые ТС и ЧЭ, α = 0,00385°С """
-        A, B, C = 3.9083e-3, -5.775e-7, -4.183e-12
+    def Pt385(r, R0=100):
+        A, B = 3.9083e-3, -5.775e-7
+        D = (255.819, 9.1455, -2.92363, 1.7909)
 
-        if t >= 0:
-            C = 0
+        if r < R0:
+            Tr = [k * (r / 100 - 1) ** (n + 1) for n, k in enumerate(D)]
+            return sum(Tr)
+        if r >= R0:
+            Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
+            return Tr
 
-        Rt = R0 * (1 + A * t + B * t ** 2 + C * (t - 100) * t ** 3)
-        return Rt
+    coeff = {'Pt385': Pt385}
+
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['Pt385'](200, 50)
+    resist = Temperature().coeff['Pt385'](-200, 100)
+    print(resist)
 
+    resist = Resist().coeff['Pt385'](119.40, 100)
     print(resist)
