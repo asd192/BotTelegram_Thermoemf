@@ -14,7 +14,7 @@ class Temperature:
 
     def Pt391(t, R0=100):
         """ Платиновые ТС и ЧЭ, α = 0,00391°С """
-        A, B, C = 3.9690e-3, -5.841e-7, 4.330e-12
+        A, B, C = 3.9690e-3, -5.841e-7, -4.330e-12
 
         if t >= 0:
             C = 0
@@ -54,22 +54,37 @@ class Temperature:
 
 class Resist:
     def Pt385(r, R0=100):
+        """ Платиновые ТС и ЧЭ, α = 0,00385°С """
         A, B = 3.9083e-3, -5.775e-7
         D = (255.819, 9.1455, -2.92363, 1.7909)
 
         if r < R0:
-            Tr = [k * (r / 100 - 1) ** (n + 1) for n, k in enumerate(D)]
+            Tr = [k * (r / R0 - 1) ** (n + 1) for n, k in enumerate(D)]
             return sum(Tr)
+
         if r >= R0:
             Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
             return Tr
 
-    coeff = {'Pt385': Pt385}
+    def Pt391(r, R0=100):
+        """ Платиновые ТС и ЧЭ, α = 0,00391°С """
+        A, B = 3.9690e-3, -5.841e-7
+        D = (251.903, 8.80035, -2.91506, 1.67611)
+
+        if r < R0:
+            Tr = [k * (r / R0 - 1) ** (n + 1) for n, k in enumerate(D)]
+            return sum(Tr)
+
+        if r >= R0:
+            Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
+            return Tr
+
+    coeff = {'Pt385': Pt385, 'Pt391': Pt391}
 
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['Pt385'](-200, 100)
+    resist = Temperature().coeff['Pt391'](-200, 100)
     print(resist)
 
-    resist = Resist().coeff['Pt385'](119.40, 100)
+    resist = Resist().coeff['Pt391'](17.24, 100)
     print(resist)
