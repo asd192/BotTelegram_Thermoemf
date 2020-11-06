@@ -19,14 +19,19 @@
 
 """Расчеты НСХ ТС и ЧЭ по ГОСТ 6651-2009"""
 
-t = -200
-r = 18.52
-D = (255.819, 9.1455, -2.92363, 1.7909)
-x = 0
-polinom = [k * (r / 100 - 1) ** (n + 1) for n, k in enumerate(D)]
-print(round(sum(polinom), 3))
+# t = -200
+# r = 18.52
+# D = (255.819, 9.1455, -2.92363, 1.7909)
+# x = 0
+# polinom = [k * (r / 100 - 1) ** (n + 1) for n, k in enumerate(D)]
+# print(round(sum(polinom), 3))
 
 # for n, k in enumerate(D):
 #     x += k * (r / 100 - 1) ** (n + 1)
 #     print(n, k)
 # print(x)
+
+A = 5.4963e-4
+B = -6.7556e-6
+t = (((A ** 2 - 4 * B * (1 - 69.45 / 100)) ** 0.5) - A) / (2 * B)
+print(t)

@@ -79,12 +79,45 @@ class Resist:
             Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
             return Tr
 
-    coeff = {'Pt385': Pt385, 'Pt391': Pt391}
+    def Cu426(r, R0=100):
+        """ Медные ТС и ЧЭ, α = 0,00426°С """
+        A = 4.26e-3
+
+        Tr = (r / R0 - 1) / A
+        return Tr
+
+    def Cu428(r, R0=100):
+        """ Медные ТС и ЧЭ, α = 0,00428°С """
+        A = 4.28e-3
+        D = (233.87, 7.9370, -2.0062, -0.3953)
+
+        if r < R0:
+            Tr = [k * (r / R0 - 1) ** (n + 1) for n, k in enumerate(D)]
+            return sum(Tr)
+
+        if r >= R0:
+            Tr = (r / R0 - 1) / A
+            return Tr
+
+    def Ni617(r, R0=100):
+        """ Никеливые ТС и ЧЭ, α = 0,00385°С """
+        A, B = 5.4963e-3, -6.7556e-6
+        D = (144.096, -25.502, 4.4876)
+
+        if r < R0 + 61.72: #TODO тестировать
+            Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
+            return Tr
+
+        if r >= R0 + 61.72: #TODO тестировать
+            Tr = [k * (r / R0 - 1.6172) ** (n + 1) for n, k in enumerate(D)]
+            return 100 + sum(Tr)
+
+    coeff = {'Pt385': Pt385, 'Pt391': Pt391, 'Cu426': Cu426, 'Cu428': Cu428, 'Ni617': Ni617}
 
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['Pt391'](-200, 100)
+    resist = Temperature().coeff['Ni617'](-60, 100)
     print(resist)
 
-    resist = Resist().coeff['Pt391'](17.24, 100)
+    resist = Resist().coeff['Ni617'](69.45, 100)
     print(resist)
