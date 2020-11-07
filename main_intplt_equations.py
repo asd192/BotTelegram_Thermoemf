@@ -101,23 +101,24 @@ class Resist:
 
     def Ni617(r, R0=100):
         """ Никеливые ТС и ЧЭ, α = 0,00385°С """
-        A, B = 5.4963e-3, -6.7556e-6
-        D = (144.096, -25.502, 4.4876)
+        D_low = (-233.1, 2.860, -0.0053) # не ГОСТ
+        D_hig = (144.096, -25.502, 4.4876)
 
-        if r < R0 + 61.72: #TODO тестировать
-            Tr = ((A ** 2 - 4 * B * (1 - r / R0)) ** 0.5 - A) / (2 * B)
-            return Tr
+        if r < R0:
+            Tr = [k * (r * 100 / R0) ** n for n, k in enumerate(D_low)]
+            return sum(Tr)
 
-        if r >= R0 + 61.72: #TODO тестировать
-            Tr = [k * (r / R0 - 1.6172) ** (n + 1) for n, k in enumerate(D)]
+        if r >= R0:
+            Tr = [k * (r / R0 - 1.6172) ** (n + 1) for n, k in enumerate(D_hig)]
             return 100 + sum(Tr)
 
     coeff = {'Pt385': Pt385, 'Pt391': Pt391, 'Cu426': Cu426, 'Cu428': Cu428, 'Ni617': Ni617}
 
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['Ni617'](-60, 100)
+    resist = Temperature().coeff['Ni617'](-30, 50)
     print(resist)
 
-    resist = Resist().coeff['Ni617'](69.45, 100)
-    print(resist)
+    resist1 = Resist().coeff['Ni617'](42.059, 50)
+    print(resist1)
+
