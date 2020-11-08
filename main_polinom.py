@@ -1,4 +1,4 @@
-import math
+from math import exp
 from coefficients import coefficients
 
 
@@ -8,7 +8,7 @@ def polinom(value, coeff_coeff, K_Type):
         polinom = [k * (value) ** n for n, k in enumerate(coeff_coeff)]
     else:
         print('Type_K')
-        polinom = [k * (value) ** n + (0.1185976 * math.exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
+        polinom = [k * (value) ** n + (0.1185976 * exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
 
     return f"{round(sum(polinom), 3)}"
 
@@ -30,7 +30,7 @@ def coeff_tp(graduation, value):
             coeff_coeff = coeff
             found = True
             break
-    print(interval, coeff)
+
     if not found:
         return "Значение за пределами ГОСТ"
 
@@ -48,5 +48,6 @@ def coeff_tp(graduation, value):
 
     return result
 
-print(coeff_tp('M', -6.154))
-print(coeff_tp('M', -200))
+if __name__ == "__main__":
+    print(coeff_tp('M', -6.154))
+    print(coeff_tp('M', -200))
