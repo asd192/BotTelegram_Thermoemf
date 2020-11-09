@@ -1,20 +1,13 @@
 import telebot
 from telebot import types
 
-from coefficients import coefficients
-from main_polinom import coeff_tp
-
+from custom_req_hundler import request_user
 
 with open("API-Token.txt", "r", encoding="UTF8") as token:
     token = token.readlines()[1].strip()
 
 bot = telebot.TeleBot(token)
 
-def num(N):
-    try:
-        return int(N)
-    except ValueError:
-        return float(N)
 
 @bot.message_handler(commands=['start'])
 def menu_down(message):
@@ -22,7 +15,8 @@ def menu_down(message):
     keyboard_down = types.ReplyKeyboardMarkup(True, False)
     keyboard_down.row('Помощь')
 
-    bot.send_message(message.chat.id, 'Если нужна помощь нажми кнопку внизу или напиши <Помощь>.', reply_markup=keyboard_down)
+    bot.send_message(message.chat.id, 'Если нужна помощь нажми кнопку внизу или напиши <Помощь>.',
+                     reply_markup=keyboard_down)
 
 
 @bot.message_handler(commands=['help'])
@@ -33,16 +27,7 @@ def help(message):
 
 @bot.message_handler(content_types=['text'])
 def get_result(message):
-    msg_txt = message.text.upper()
-    msg_txt = msg_txt.split()
+    request_user(message.text)
 
-    if msg_txt[0] in coefficients.keys():
-        print(type(msg_txt[0]), type(num(msg_txt[1])))
-        result = coeff_tp(msg_txt[0], num(msg_txt[1]))
-        return bot.send_message(message.chat.id, result)
-
-
-    else:
-        help(message)
 
 bot.polling(none_stop=True, interval=0)
