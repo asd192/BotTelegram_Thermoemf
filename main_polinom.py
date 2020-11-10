@@ -13,15 +13,15 @@ def polinom(value, coeff_coeff, K_Type):
     return f"{round(sum(polinom), 3)}"
 
 
-def coeff_tp(graduation, value):
+def coeff_tp(graduation, value, coeff_type):
     """ Определение требуемых коэффициентов """
     # определение типа коэффициента
-    if type(value) is int:
-        coeff_type = 'T'
-    elif type(value) is float:
-        coeff_type = 'mV'
-    else:
-        return "Я так не понимаю. Смотри как нужно - К 100 или К 20.452 и т.п.."
+    # if type(value) is int:
+    #     coeff_type = 'T'
+    # elif type(value) is float:
+    #     coeff_type = 'mV'
+    # else:
+    #     return "Я так не понимаю. Смотри как нужно - К 100 или К 20.452 и т.п.."
 
     # определение необходимых коэффициентов
     found = False
@@ -44,7 +44,7 @@ def coeff_tp(graduation, value):
     poly = polinom(value, coeff_coeff, K_type)
 
     # сбор сообщения для отправки пользователю
-    result = f"{poly}({graduation})"
+    result = f"{poly} {'°C' if coeff_type == 'mV' else 'mV'}(тип {graduation})"
 
     return result
 
