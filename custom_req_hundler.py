@@ -104,7 +104,7 @@ def request_user(message):
 
 
 if __name__ == '__main__':
-    print(request_user('-50 100M 426'))
+    print(request_user('-5mV K'))
     print()
     print(request_user('-50t 100M 428'))
     print()
