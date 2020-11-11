@@ -1,33 +1,42 @@
 from coefficients import coefficients
 from main_polinom import coeff_tp
 
+from main_intplt_equations import Temperature
+from main_intplt_equations import Resist
 
-def is_number(num, t=False):
+def is_number(num: str, t=False):
     """ Преобразует в число, если число. Дробит на значения(Т, Ом или mV). """
     try:
         if float(num):
             if ('.' or ',') in num:
+                num = num.replace(',', '.')
                 return float(num) if t else (float(num), 'R')
             else:
                 return int(num) if t else (int(num), 'T')
     except ValueError:
         # если число с указанием типа, отделяем число
-        index_num = -1
-        for i in num[::-1]:
-            index_num += 1
-            if i.isdigit():
-                break
+        # index_num = -1
+        # for i in num[::-1]:
+        #     index_num += 1
+        #     if i.isdigit():
+        #         break
 
-        return (is_number(num[:-(index_num)].upper(), True), num[-(index_num):])
+        # return (is_number(num[:-(index_num)].upper(), True), num[-(index_num):])
+        num_num = ''.join([n for n in num if n.isdigit() or n in ',.'])
+        num_str = ''.join([n for n in num if n.isalpha()])
+
+        return (is_number(num_num.upper(), True), num_str)
 
 
-def is_termo(value, type_value, type_grad, is_tp):
+
+def type_termo(value, type_value, type_grad, is_tp):
     """ Определяет тип, ТП или ТСМ. Отправляет на расчёт. """
+    # определение ТП по признакам
     if not is_tp and type_grad in coefficients.keys():
         print(type_grad, value, type_value)
         if type_value in 'TТ':
             return coeff_tp(type_grad, value, 'T')
-        elif type_value in 'BRРMVОМВ':
+        elif type_value not in 'TТ':
             return coeff_tp(type_grad, value, 'mV')
         else:
             print('ELSE', type(value))
@@ -36,6 +45,10 @@ def is_termo(value, type_value, type_grad, is_tp):
             if type(value) is float:
                 coeff_type = 'mV'
             return coeff_tp(type_grad, value, coeff_type)
+
+    # определение ТСМ по признакам
+    if type_grad in Temperature.coeff.keys() and not is_tp or is_tp in '426428385391':
+        pass
 
 
 
@@ -48,47 +61,14 @@ def request_user(message):
     msg = (*msg0, msg1, msg2)
     print(msg)
 
-    result = is_termo(*msg)
+    result = type_termo(*msg)
     return result
 
-print(request_user('300.05t k'))
-print()
-print(request_user('300 k'))
-print()
-
-print(request_user('500 a3'))
-print()
-print(request_user('500.00t a3'))
-print()
-print(request_user('7mV a3'))
-print()
-print(request_user('7V a3'))
-print()
-
-print(request_user('20.644 k'))
-print()
-print(request_user('100 Cu428'))
-print()
-print(request_user('142.80 Cu428'))
-print()
 
 print(request_user('100 50m 426'))
 print()
 print(request_user('100 50м 428'))
 print()
-print()
-
-print(request_user('20v k'))
-print()
-print(request_user('22в k'))
-print()
-print(request_user('100.00t Cu428'))
-print()
-print(request_user('142r Cu428'))
-print()
-print(request_user('142р Cu428'))
-print()
-
 print(request_user('100.00t 50m 426'))
 print()
 print(request_user('100.00т 50м 428'))
@@ -96,6 +76,15 @@ print()
 print(request_user('100.00t 50p 385'))
 print()
 print(request_user('100.00т 50п 391'))
+print()
+print()
+print(request_user('100.00r 50m 426'))
+print()
+print(request_user('100.00r 50м 428'))
+print()
+print(request_user('100.00r 50p 385'))
+print()
+print(request_user('100.00r 50п 391'))
 
 
 # for i in variants.values():

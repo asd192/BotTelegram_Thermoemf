@@ -15,15 +15,6 @@ def polinom(value, coeff_coeff, K_Type):
 
 def coeff_tp(graduation, value, coeff_type):
     """ Определение требуемых коэффициентов """
-    # определение типа коэффициента
-    # if type(value) is int:
-    #     coeff_type = 'T'
-    # elif type(value) is float:
-    #     coeff_type = 'mV'
-    # else:
-    #     return "Я так не понимаю. Смотри как нужно - К 100 или К 20.452 и т.п.."
-
-    # определение необходимых коэффициентов
     found = False
     for interval, coeff in coefficients[graduation][coeff_type].items():
         if interval[0] <= value <= interval[1]:

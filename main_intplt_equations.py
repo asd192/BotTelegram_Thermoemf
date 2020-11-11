@@ -48,7 +48,7 @@ class Temperature:
         Rt = R0 * (1 + A * t + B * t ** 2 + C * (t - 100) * t ** 2)
         return Rt
 
-    coeff = {'Pt385': Pt385, 'Pt391': Pt391, 'Cu426': Cu426, 'Cu428': Cu428, 'Ni617': Ni617}
+    coeff = {'PT385': Pt385, 'PT391': Pt391, 'CU426': Cu426, 'CU428': Cu428, 'NI617': Ni617}
 
 
 class Resist:
@@ -111,12 +111,12 @@ class Resist:
             Tr = [k * (r / R0 - 1.6172) ** (n + 1) for n, k in enumerate(D_hig)]
             return 100 + sum(Tr)
 
-    coeff = {'Pt385': Pt385, 'Pt391': Pt391, 'Cu426': Cu426, 'Cu428': Cu428, 'Ni617': Ni617}
+    coeff = {'PT385': Pt385, 'PT391': Pt391, 'CU426': Cu426, 'CU428': Cu428, 'NI617': Ni617}
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['Ni617'](-30, 50)
+    resist = Temperature().coeff['NI617'](-30, 50)
     print(resist)
 
-    resist1 = Resist().coeff['Ni617'](42.059, 50)
+    resist1 = Resist().coeff['NI617'](42.059, 50)
     print(resist1)
 
