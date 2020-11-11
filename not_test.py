@@ -1,2 +1,9 @@
-type_grad = '50M'
-print(''.join([n for n in type_grad if n.isalpha()]) in 'M')
+g = {
+    385: (385, 38, 35, 5),
+    391: (391, 31, 91, 9),
+    426: (426, 46, 6),
+    428: (428, 48, 8),
+    617: (617, 61, 67, 7)
+}
+
+print([k for k, i in g.items() if 5 in i])

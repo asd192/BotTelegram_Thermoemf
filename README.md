@@ -14,7 +14,7 @@
 <b>user_message.log</b> — лог нераспознанных сообщений
 </p>
 
-<h3>Тестирование</h3>
+:black_square_button: <h3>Тестирование</h3>
 <p>
 <b>test_main.py</b> <br>
 </p>
@@ -22,6 +22,9 @@
 <pre>pytest -m tp --reruns 1 -s -v --tb=line test_main.py</pre>
 Тестирование преобразуемых значений ТСМ
 <pre>pytest -m tsm --reruns 1 -s -v --tb=line test_main.py</pre>
+
+<h3>Точность</h3>
+<b>
 
 <h3>Использование</h3>
 <p>

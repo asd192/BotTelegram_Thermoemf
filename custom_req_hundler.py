@@ -45,8 +45,7 @@ def type_termo(value, type_value, type_grad, is_tp):
                 coeff_type = 'mV'
             return coeff_tp(type_grad, value, coeff_type)
 
-    # определение ТСМ
-    if str(type_grad[0]).isdigit() and not is_tp:
+    else:
         global grad
 
         type_grad_num = separator_str_num(type_grad)[0]
@@ -59,12 +58,36 @@ def type_termo(value, type_value, type_grad, is_tp):
         if type_grad_str in 'NiНИ':
             grad = 'NI617'
 
-        if type_value in 'TТ':
-            result = Temperature.coeff[grad](value, float(type_grad_num))
-            return f"{result} Ом({grad})"
-        if type_value not in 'TТ':
-            result = Resist.coeff[grad](value, float(type_grad_num))
-            return f"{result} °C({grad})"
+        # определение ТСМ с False
+        if str(type_grad[0]).isdigit() and not is_tp:
+            if type_value in 'TТ':
+                result = Temperature.coeff[grad](value, float(type_grad_num))
+                return f"{result:.2f} Ом({grad})"
+            if type_value not in 'TТ':
+                result = Resist.coeff[grad](value, float(type_grad_num))
+                return f"{result:.1f} °C({grad})"
+
+        # определение ТСМ с без False
+        if str(type_grad[0]).isdigit() and is_tp in '426428385391':
+            ### переопределяем пользовательский коэффициент на правильный ###
+            g = {
+                385: (385, 38, 35, 5),
+                391: (391, 31, 91, 9),
+                426: (426, 46, 6),
+                428: (428, 48, 8),
+                617: (617, 61, 67, 7)
+            }
+
+            a = [k for k, i in g.items() if int(is_tp) in i][0]
+            grad = grad.replace(grad[2:], str(a))
+            ### --------------------------------------------------------- ###
+
+            if type_value in 'TТ':
+                result = Temperature.coeff[grad](value, float(type_grad_num))
+                return f"{result:.2f} Ом({grad})"
+            if type_value not in 'TТ':
+                result = Resist.coeff[grad](value, float(type_grad_num))
+                return f"{result:.1f} °C({grad})"
 
 
 def request_user(message):
