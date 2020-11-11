@@ -7,7 +7,7 @@ from main_intplt_equations import Resist
 
 def separator_str_num(value):
     """ Отделяет числа от строк """
-    sep_num = ''.join([n for n in value if n.isdigit() or n in ',.'])
+    sep_num = ''.join([n for n in value if n.isdigit() or n in ',.-'])
     sep_str = ''.join([n for n in value if n.isalpha()])
     return (sep_num, sep_str)
 
@@ -80,7 +80,7 @@ def type_termo(value, type_value, type_grad, is_tp):
 
             a = [k for k, i in g.items() if int(is_tp) in i][0]
             grad = grad.replace(grad[2:], str(a))
-            ### --------------------------------------------------------- ###
+            #################################################################
 
             if type_value in 'TТ':
                 result = Temperature.coeff[grad](value, float(type_grad_num))
@@ -104,7 +104,13 @@ def request_user(message):
 
 
 if __name__ == '__main__':
-    print(request_user('100 K'))
+    print(request_user('-50 100M 426'))
+    print()
+    print(request_user('-50t 100M 428'))
+    print()
+    print(request_user('115.0t 50m '))
+    print()
+    print(request_user('-5.89t K'))
     print()
     print(request_user('71.39r 100m'))
     print()
