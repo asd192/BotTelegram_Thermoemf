@@ -47,12 +47,24 @@ def type_termo(value, type_value, type_grad, is_tp):
 
     # определение ТСМ
     if str(type_grad[0]).isdigit() and not is_tp:
-        type_grad_num = ''.join([n for n in type_grad if n.isdigit() or n in ',.'])
-        type_grad_str = ''.join([n for n in type_grad if n.isalpha()])
+        global grad
 
-        print(type_grad_num, type_grad_str)
-        # if type_value in 'TТ':
-        #     return Temperature.coeff[]
+        type_grad_num = separator_str_num(type_grad)[0]
+        type_grad_str = separator_str_num(type_grad)[1]
+
+        if type_grad_str in 'MМ':
+            grad = 'CU428'
+        if type_grad_str in 'PtП':
+            grad = 'PT391'
+        if type_grad_str in 'NiНИ':
+            grad = 'NI617'
+
+        if type_value in 'TТ':
+            result = Temperature.coeff[grad](value, float(type_grad_num))
+            return f"{result} Ом({grad})"
+        if type_value not in 'TТ':
+            result = Resist.coeff[grad](value, float(type_grad_num))
+            return f"{result} °C({grad})"
 
 
 def request_user(message):
@@ -70,9 +82,11 @@ def request_user(message):
 
 print(request_user('100 K'))
 print()
-print(request_user('142.80 50m'))
+print(request_user('71.39r 100m'))
 print()
-print(request_user('100 50м'))
+print(request_user('100 100м'))
+print()
+print(request_user('100 50Ни'))
 print()
 print(request_user('100 50m 426'))
 print()

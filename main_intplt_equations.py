@@ -114,9 +114,9 @@ class Resist:
     coeff = {'PT385': Pt385, 'PT391': Pt391, 'CU426': Cu426, 'CU428': Cu428, 'NI617': Ni617}
 
 if __name__ == "__main__":
-    resist = Temperature().coeff['NI617'](-30, 50)
+    resist = Temperature().coeff['CU428'](71.39, 50)
     print(resist)
 
-    resist1 = Resist().coeff['NI617'](42.059, 50)
+    resist1 = Resist().coeff['CU428'](71.39, 100)
     print(resist1)
 
