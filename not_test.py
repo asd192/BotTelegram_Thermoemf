@@ -1,4 +1,7 @@
-print(ord('M'))
-print(ord('М'))
+print(type(3.0) is float)
+print(type(20.00) is int)
 
-print(int(-74.60))
+num = ''
+type(num) is float
+
+print('10'.replace(',', '.'))

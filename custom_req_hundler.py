@@ -11,33 +11,36 @@ from phrase_dict import phrase
 
 def separator_str_num(value):
     """ Отделяет числа от строк """
-    sep_num = ''.join([n for n in value if n.isdigit() or n in ',.-'])
-    sep_num = sep_num.replace(',', '.')
-
+    sep_num = ''.join([n for n in value if n.isdigit() or n in '.-'])
     sep_str = ''.join([n for n in value if n.isalpha()])
 
     return (sep_num, sep_str)
 
 
-def is_number(num, t=False):
+def is_number(num, from_separator=False):
     """ Преобразует в число, если число. Дробит на значения(Т, Ом или mV). """
     try:
         if float(num):
-            print(num, t)
-            return float(num) if t else (float(num), 'T')
+            if num.isdigit():
+                num, num_str = int(num), 'T'
+            else:
+                num, num_str = float(num), 'R'
+            result = num if from_separator else (num, num_str)
+
+            return result
     except ValueError:
         # если число с указанием типа, отделяем число
         num_num = separator_str_num(num)[0]
         num_str = separator_str_num(num)[1]
 
-        return (is_number(num_num.upper(), True), num_str)
+        return (is_number(num_num, from_separator=True), num_str)
 
 
 def type_termo(value, type_value, type_grad, is_tp):
     """ Определяет тип, ТП или ТСМ. Отправляет на расчёт. """
     # определение ТП
+    print(value, type_value, type_grad, is_tp)
     if not is_tp and type_grad in coefficients.keys():
-        print(type_grad, value, type_value)
         if type_value in 'TТ':
             return coeff_tp(type_grad, value, 'T')
         elif type_value not in 'TТ':
@@ -97,23 +100,40 @@ def type_termo(value, type_value, type_grad, is_tp):
 def request_user(message):
     try:
         msg = message.split()
-        msg0, msg1, msg2 = is_number(msg[0].upper()), msg[1].upper(), False
+        print(msg)
+        msg0, msg1, msg2 = is_number(msg[0].replace(',', '.').upper()), msg[1].upper(), False
         if len(msg) == 3:
             msg2 = msg[2]
 
         msg = (*msg0, msg1, msg2)
-        print(msg)
 
         result = type_termo(*msg)
+
         return result
     except IndexError:
-
         msg_err = phrase['error'][int(random.uniform(0, len(phrase['error'])))]
         msg_help = phrase['help'][int(random.uniform(0, len(phrase['help'])))]
-        print(msg_err, msg_help)
+
         return f'{msg_err}\n\n{msg_help}'
 
 if __name__ == '__main__':
+    print(request_user('10 K'))
+    print()
+    print(request_user('20.00 K'))
+    print()
+    print(request_user('30,00 K'))
+    print()
+    print(request_user('20r K'))
+    print()
+    print(request_user('20.00r K'))
+    print()
+    print(request_user('20,00t K'))
+    print()
+    print(request_user('20.00t K'))
+    print()
+    print(request_user('20 K'))
+    print()
+    print()
     print(request_user('-74,60 100M'))
     print()
     print(request_user('-74.60 100M'))
@@ -146,5 +166,3 @@ if __name__ == '__main__':
     print(request_user('-74,60r 100M 426'))
     print()
     print(request_user('-74.60r 100M 426'))
-
-
