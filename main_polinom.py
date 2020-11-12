@@ -10,7 +10,7 @@ def polinom(value, coeff_coeff, K_Type):
         print('Type_K')
         polinom = [k * (value) ** n + (0.1185976 * exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
 
-    return f"{round(sum(polinom), 3)}"
+    return f"{round(sum(polinom), 1)}"
 
 
 def coeff_tp(graduation, value, coeff_type):
@@ -35,7 +35,7 @@ def coeff_tp(graduation, value, coeff_type):
     poly = polinom(value, coeff_coeff, K_type)
 
     # сбор сообщения для отправки пользователю
-    result = f"{poly} {'°C' if coeff_type == 'mV' else 'mV'}(тип {graduation})"
+    result = f"{poly} {'°C' if coeff_type == 'mV' else 'mV'}({graduation})"
 
     return result
 

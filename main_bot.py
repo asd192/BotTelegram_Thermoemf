@@ -27,7 +27,7 @@ def help(message):
 
 @bot.message_handler(content_types=['text'])
 def get_result(message):
-    request_user(message.text)
+    bot.send_message(message.chat.id, request_user(message.text))
 
 
 bot.polling(none_stop=True, interval=0)

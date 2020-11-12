@@ -1,26 +1,30 @@
+import random
+
 from coefficients import coefficients
 from main_polinom import coeff_tp
 
 from main_intplt_equations import Temperature
 from main_intplt_equations import Resist
 
+from phrase_dict import phrase
+
 
 def separator_str_num(value):
     """ Отделяет числа от строк """
     sep_num = ''.join([n for n in value if n.isdigit() or n in ',.-'])
+    sep_num = sep_num.replace(',', '.')
+
     sep_str = ''.join([n for n in value if n.isalpha()])
+
     return (sep_num, sep_str)
 
 
-def is_number(num: str, t=False):
+def is_number(num, t=False):
     """ Преобразует в число, если число. Дробит на значения(Т, Ом или mV). """
     try:
         if float(num):
-            if ('.' or ',') in num:
-                num = num.replace(',', '.')
-                return float(num) if t else (float(num), 'R')
-            else:
-                return int(num) if t else (int(num), 'T')
+            print(num, t)
+            return float(num) if t else (float(num), 'T')
     except ValueError:
         # если число с указанием типа, отделяем число
         num_num = separator_str_num(num)[0]
@@ -91,51 +95,56 @@ def type_termo(value, type_value, type_grad, is_tp):
 
 
 def request_user(message):
-    msg = message.split()
-    msg0, msg1, msg2 = is_number(msg[0].upper()), msg[1].upper(), False
-    if len(msg) == 3:
-        msg2 = msg[2]
+    try:
+        msg = message.split()
+        msg0, msg1, msg2 = is_number(msg[0].upper()), msg[1].upper(), False
+        if len(msg) == 3:
+            msg2 = msg[2]
 
-    msg = (*msg0, msg1, msg2)
-    print(msg)
+        msg = (*msg0, msg1, msg2)
+        print(msg)
 
-    result = type_termo(*msg)
-    return result
+        result = type_termo(*msg)
+        return result
+    except IndexError:
 
+        msg_err = phrase['error'][int(random.uniform(0, len(phrase['error'])))]
+        msg_help = phrase['help'][int(random.uniform(0, len(phrase['help'])))]
+        print(msg_err, msg_help)
+        return f'{msg_err}\n\n{msg_help}'
 
 if __name__ == '__main__':
-    print(request_user('-5mV K'))
+    print(request_user('-74,60 100M'))
     print()
-    print(request_user('-50t 100M 428'))
+    print(request_user('-74.60 100M'))
     print()
-    print(request_user('115.0t 50m '))
+    print(request_user('-74,60t 100M'))
     print()
-    print(request_user('-5.89t K'))
+    print(request_user('-74.60t 100M'))
     print()
-    print(request_user('71.39r 100m'))
+    print(request_user('-74r 100M'))
     print()
-    print(request_user('100 100м'))
+    print(request_user('-74r 100M'))
     print()
-    print(request_user('100 50Ни'))
+    print(request_user('-74,60r 100M'))
     print()
-    print(request_user('100 50m 426'))
-    print()
-    print(request_user('100 50м 428'))
+    print(request_user('-74.60r 100M'))
     print()
     print()
-    print(request_user('100.00t 50m 426'))
+    print(request_user('-74,60 100M 426'))
     print()
-    print(request_user('100.00т 50м 428'))
+    print(request_user('-74.60 100M 426'))
     print()
-    print(request_user('100.00t 50p 385'))
+    print(request_user('-74,60t 100M 426'))
     print()
-    print(request_user('100.00т 50п 391'))
+    print(request_user('-74.60t 100M 426'))
     print()
+    print(request_user('-74r 100M 426'))
     print()
-    print(request_user('100.00r 50m 426'))
+    print(request_user('-74r 100M 426'))
     print()
-    print(request_user('100.00r 50м 428'))
+    print(request_user('-74,60r 100M 426'))
     print()
-    print(request_user('100.00r 50p 385'))
-    print()
-    print(request_user('100.00r 50п 391'))
+    print(request_user('-74.60r 100M 426'))
+
+
