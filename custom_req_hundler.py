@@ -69,10 +69,10 @@ def type_termo(value, type_value, type_grad, is_tp):
         if str(type_grad[0]).isdigit() and not is_tp:
             if type_value in 'TТ':
                 result = Temperature.coeff[grad](value, float(type_grad_num))
-                return f"{result:.2f} Ом({grad})"
+                return f"{result:.2f} Ом({grad.replace(grad[1], grad[1].lower())})"
             if type_value not in 'TТ':
                 result = Resist.coeff[grad](value, float(type_grad_num))
-                return f"{result:.1f} °C({grad})"
+                return f"{result:.1f} °C({grad.replace(grad[1], grad[1].lower())})"
 
         # определение ТСМ с без False
         if str(type_grad[0]).isdigit() and is_tp in '426428385391':
@@ -100,6 +100,14 @@ def type_termo(value, type_value, type_grad, is_tp):
 def request_user(message):
     try:
         msg = message.split()
+        #########################################################
+        # TODO допилить проверку на правильную строку
+        if 2 < len(msg) > 4:
+            msg_err = phrase['error'][int(random.uniform(0, len(phrase['error'])))]
+            msg_help = phrase['help'][int(random.uniform(0, len(phrase['help'])))]
+
+            return f'{msg_err}\n\n{msg_help}'
+        ##########################################################
         print(msg)
         msg0, msg1, msg2 = is_number(msg[0].replace(',', '.').upper()), msg[1].upper(), False
         if len(msg) == 3:
