@@ -1,4 +1,6 @@
 import random
+import datetime
+from os import remove
 
 from coefficients import coefficients
 from main_polinom import coeff_tp
@@ -7,6 +9,23 @@ from main_intplt_equations import Temperature
 from main_intplt_equations import Resist
 
 from phrase_dict import phrase
+
+
+def error(user_message, my_message=None):
+    while True:
+        try:
+            with open("get_log.lock", "x"):
+                with open("user_message.log", "a", encoding="UTF8") as dbq_log:
+                    dbq_log.write(f'{datetime.datetime.now()} - {user_message} - {my_message}\n')
+            remove("get_log.lock")
+            break
+        except FileExistsError:
+            continue
+
+    msg_err = random.choice(phrase['error'])
+    msg_help = random.choice(phrase['help'])
+
+    return f'{msg_err}\n\n{msg_help}\n Помощь - /help'
 
 
 def separator_str_num(value):
@@ -39,7 +58,7 @@ def is_number(num, from_separator=False):
 def type_termo(value, type_value, type_grad, is_tp):
     """ Определяет тип, ТП или ТСМ. Отправляет на расчёт. """
     # определение ТП
-    print(value, type_value, type_grad, is_tp)
+    grad, coeff_type = None, None
     if not is_tp and type_grad in coefficients.keys():
         if type_value in 'TТ':
             return coeff_tp(type_grad, value, 'T')
@@ -53,8 +72,6 @@ def type_termo(value, type_value, type_grad, is_tp):
             return coeff_tp(type_grad, value, coeff_type)
 
     else:
-        global grad
-
         type_grad_num = separator_str_num(type_grad)[0]
         type_grad_str = separator_str_num(type_grad)[1]
 
@@ -74,7 +91,7 @@ def type_termo(value, type_value, type_grad, is_tp):
                 result = Resist.coeff[grad](value, float(type_grad_num))
                 return f"{result:.1f} °C({grad.replace(grad[1], grad[1].lower())})"
 
-        # определение ТСМ с без False
+        # определение ТСМ без False
         if str(type_grad[0]).isdigit() and is_tp in '426428385391':
             ### переопределяем пользовательский коэффициент на правильный ###
             g = {
@@ -85,8 +102,8 @@ def type_termo(value, type_value, type_grad, is_tp):
                 617: (617, 61, 67, 7)
             }
 
-            a = [k for k, i in g.items() if int(is_tp) in i][0]
-            grad = grad.replace(grad[2:], str(a))
+            alpha = [k for k, i in g.items() if int(is_tp) in i][0]
+            grad = grad.replace(grad[2:], str(alpha))
             #################################################################
 
             if type_value in 'TТ':
@@ -98,79 +115,26 @@ def type_termo(value, type_value, type_grad, is_tp):
 
 
 def request_user(message):
-    try:
-        msg = message.split()
-        #########################################################
-        # TODO допилить проверку на правильную строку
-        if 2 < len(msg) > 4:
-            msg_err = phrase['error'][int(random.uniform(0, len(phrase['error'])))]
-            msg_help = phrase['help'][int(random.uniform(0, len(phrase['help'])))]
+    """ Обрабатывает сообщение пользователя """
+    msg = message.split()
+    if len(msg) < 2 or len(msg) > 4:
+        return error(msg)
+    else:
+        try:
+            msg01 = is_number(msg[0].replace(',', '.').upper())
+            msg2 = msg[1].upper()
+            msg3 = msg[2] if len(msg) == 3 else False
 
-            return f'{msg_err}\n\n{msg_help}'
-        ##########################################################
-        print(msg)
-        msg0, msg1, msg2 = is_number(msg[0].replace(',', '.').upper()), msg[1].upper(), False
-        if len(msg) == 3:
-            msg2 = msg[2]
+            msg_processing = (*msg01, msg2, msg3)
+            result = type_termo(*msg_processing)
 
-        msg = (*msg0, msg1, msg2)
-
-        result = type_termo(*msg)
-
-        return result
-    except IndexError:
-        msg_err = phrase['error'][int(random.uniform(0, len(phrase['error'])))]
-        msg_help = phrase['help'][int(random.uniform(0, len(phrase['help'])))]
-
-        return f'{msg_err}\n\n{msg_help}'
+            return result
+        except IndexError:
+            return error(msg, 'IndexError')
+        except RecursionError:
+            return error(msg, 'RecursionError')
 
 if __name__ == '__main__':
     print(request_user('10 K'))
-    print()
-    print(request_user('20.00 K'))
-    print()
-    print(request_user('30,00 K'))
-    print()
-    print(request_user('20r K'))
-    print()
-    print(request_user('20.00r K'))
-    print()
-    print(request_user('20,00t K'))
-    print()
-    print(request_user('20.00t K'))
-    print()
-    print(request_user('20 K'))
-    print()
-    print()
-    print(request_user('-74,60 100M'))
-    print()
-    print(request_user('-74.60 100M'))
-    print()
-    print(request_user('-74,60t 100M'))
-    print()
     print(request_user('-74.60t 100M'))
-    print()
-    print(request_user('-74r 100M'))
-    print()
-    print(request_user('-74r 100M'))
-    print()
-    print(request_user('-74,60r 100M'))
-    print()
-    print(request_user('-74.60r 100M'))
-    print()
-    print()
-    print(request_user('-74,60 100M 426'))
-    print()
-    print(request_user('-74.60 100M 426'))
-    print()
-    print(request_user('-74,60t 100M 426'))
-    print()
-    print(request_user('-74.60t 100M 426'))
-    print()
-    print(request_user('-74r 100M 426'))
-    print()
-    print(request_user('-74r 100M 426'))
-    print()
-    print(request_user('-74,60r 100M 426'))
-    print()
-    print(request_user('-74.60r 100M 426'))
+    print(request_user('120,60r 100M 426'))

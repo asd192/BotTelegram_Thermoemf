@@ -1,6 +1,7 @@
 import telebot
 from telebot import types
 
+from phrase_dict import phrase
 from custom_req_hundler import request_user
 
 with open("API-Token.txt", "r", encoding="UTF8") as token:
@@ -13,16 +14,17 @@ bot = telebot.TeleBot(token)
 def menu_down(message):
     """Крафт и отправка нижнего меню"""
     keyboard_down = types.ReplyKeyboardMarkup(True, False)
-    keyboard_down.row('Помощь')
+    keyboard_down.row('/help')
 
-    bot.send_message(message.chat.id, 'Если нужна помощь нажми кнопку внизу или напиши <Помощь>.',
+    bot.send_message(message.chat.id, 'Привет. Если нужна помощь нажми кнопку внизу или напиши /help.',
                      reply_markup=keyboard_down)
 
 
 @bot.message_handler(commands=['help'])
 def help(message):
-    bot.send_message(message.chat.id, "Команды вводить нужно так - <Тип ТСМ или ТП><Пробел><Температура, Ом-ы или mV>.\
-\n\nНапример, так: K -5.89, K -200, Cu85 74.60 или Cu85 115.")
+    bot.send_message(message.chat.id, f"Целые числа бот распознаёт как значение температуры. Числа с плавающей точкой как \
+Ом-ы или мВ. Если требуется указать температуру с плавающей точкой или Ом-ы и мВ целым числом, используй префиксы t, mV,\
+Ом после значения. Например так:\n74r 100M --> вернёт <-60.2°C (тип Cu85)>\n\nКоманды вводить нужно так:\n\n{phrase['help'][0]}\n{phrase['main_help']}")
 
 
 @bot.message_handler(content_types=['text'])
