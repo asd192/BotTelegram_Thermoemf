@@ -16,6 +16,7 @@ def polinom(value, coeff_coeff, K_Type):
 def coeff_tp(graduation, value, coeff_type):
     """ Определение требуемых коэффициентов """
     found = False
+    coeff_coeff = None
     for interval, coeff in coefficients[graduation][coeff_type].items():
         if interval[0] <= value <= interval[1]:
             coeff_coeff = coeff
@@ -40,5 +41,5 @@ def coeff_tp(graduation, value, coeff_type):
     return result
 
 if __name__ == "__main__":
-    print(coeff_tp('M', -6.154))
-    print(coeff_tp('M', -200))
+    print(coeff_tp('M', -6.154, 'mV'))
+    print(coeff_tp('M', -200, 'T'))

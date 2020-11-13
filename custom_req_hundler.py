@@ -5,13 +5,13 @@ from os import remove
 from coefficients import coefficients
 from main_polinom import coeff_tp
 
-from main_intplt_equations import Temperature
-from main_intplt_equations import Resist
+from main_intplt_equations import Temperature, Resist
 
 from phrase_dict import phrase
 
-
+# TODO переделать на log_all
 def error(user_message, my_message=None):
+    """ Обработка ошибок """
     while True:
         try:
             with open("get_log.lock", "x"):
@@ -41,8 +41,12 @@ def is_number(num, from_separator=False):
     try:
         if float(num):
             if num.isdigit():
+                print('T')
+                num, num_str = int(num), 'T'
+            elif num[1:].isdigit():
                 num, num_str = int(num), 'T'
             else:
+                print('R')
                 num, num_str = float(num), 'R'
             result = num if from_separator else (num, num_str)
 
@@ -63,7 +67,7 @@ def type_termo(value, type_value, type_grad, is_tp):
         if type_value in 'TТ':
             return coeff_tp(type_grad, value, 'T')
         elif type_value not in 'TТ':
-            return coeff_tp(type_grad, value, 'mV')
+             return coeff_tp(type_grad, value, 'mV')
         else:
             if type(value) is int:
                 coeff_type = 'T'
@@ -129,12 +133,13 @@ def request_user(message):
             result = type_termo(*msg_processing)
 
             return result
+
         except IndexError:
             return error(msg, 'IndexError')
         except RecursionError:
             return error(msg, 'RecursionError')
 
 if __name__ == '__main__':
-    print(request_user('10 K'))
-    print(request_user('-74.60t 100M'))
-    print(request_user('120,60r 100M 426'))
+    print(request_user('0 R'))
+    # print(request_user('-74.60t 100M'))
+    # print(request_user('120,60r 100M 426'))
