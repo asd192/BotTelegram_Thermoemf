@@ -3,44 +3,82 @@
     0,00 для mV(ТП) и Ом(ТСМ)
     0 для T(ТП, ТСМ)
 """
+import os
+from sys import platform
+
 import pytest
 from processing_user_request import request_user
+
+with open("result_test.txt", "w"):
+    pass
+def writing_result_errors(result_list):
+    with open("result_test.txt", "a", encoding="utf8") as file:
+        for i in result_list:
+            file.write(i + '\n')
 
 
 @pytest.mark.tp  # pytest -m tp test_main.py
 class TestMainPolinom():
+
     tp = {
         'R': ((-50, -0.226), (0, 0.000), (1064, 11.361), (1065, 11.375), (1768, 21.101)),
         'S': ((-50, -0.236), (0, 0.000), (1064, 10.332), (1065, 10.344), (1768, 18.693)),
-        'B': ((630, 1.975), (631, 1.981), (1820, 13.820)),
+        'B': ((250, 0.291), (630, 1.975), (631, 1.981), (1820, 13.820)),
+
     }
 
     @pytest.mark.tp_t  # pytest -m tp_t test_main.py
     def test_tp_t(self):
+        global count_tests, count_tests_error
+        errors_tp_t = []
+
         for key, values in TestMainPolinom.tp.items():
             for value in values:
                 standard = f"{round(value[1], 3)} mV({key})"
+                result_test = f"{standard} ({value[0]}, {value[1]}, {key})"
 
                 request_1 = request_user(f'{value[0]} {key.upper()}')
-                assert request_1 == standard, "test 1-T: 20 K(верхний регистр)"
+                if request_1 != standard:
+                    errors_tp_t.append(f"{request_1} <> {result_test} --> 1-T(верхний регистр) --> {value[0]} {key.upper()}")
 
                 request_2 = request_user(f'{value[0]} {key.lower()}')
-                assert request_2 == standard, "test 2-T: 20 k(нижний регистр)"
+                if request_2 != standard:
+                    errors_tp_t.append(f"{request_2} <> {result_test} --> 2-T(нижний регистр) --> {value[0]} {key.lower()}")
 
                 request_3 = request_user(f'{float(value[0])}t {key}')
-                assert request_3 == standard, "test 3-T: 20.0t k(плавающая точка в температуре, ключ t)"
+                if request_3 != standard:
+                    errors_tp_t.append(f"{request_3} <> {result_test} --> 3-T(число с плавающей точкой, ключ t) --> {float(value[0])}t {key}")
+
+        assert len(errors_tp_t) == 0, writing_result_errors(errors_tp_t)
 
     @pytest.mark.tp_mv  # pytest -m tp_mv test_main.py
     def test_tp_mv(self):
+        global count_tests, count_tests_error
+        errors_tp_mv = []
+
         for key, values in TestMainPolinom.tp.items():
             for value in values:
                 standard = f"{value[0]} °C({key})"
+                result_test = f"{standard} ({value[1]}, {value[0]}, {key})"
 
                 request_1 = request_user(f'{value[1]} {key.upper()}')
-                assert request_1 == standard, "test 1-mV: 20 K(верхний регистр)"
+                if request_1 != standard:
+                    errors_tp_mv.append(f"{request_1} <> {result_test} --> 1-mV(верхний регистр) --> {value[1]} {key.upper()}")
 
                 request_2 = request_user(f'{value[1]} {key.lower()}')
-                assert request_2 == standard, "test 2-mV: 20 k(нижний регистр)"
+                if request_2 != standard:
+                    errors_tp_mv.append(f"{request_2} <> {result_test} --> 2-mV(нижний регистр) --> {value[1]} {key.lower()}")
 
                 request_3 = request_user(f'{value[1]}mV {key}')
-                assert request_3 == standard, "test 3-mV: 20mv k(без плавающей точки в mV, ключ mv)"
+                if request_2 != standard:
+                    errors_tp_mv.append(f"{request_3} <> {result_test} --> 3-mV(целое число в mV, ключ mV) --> {value[1]}mV {key}")
+
+        assert len(errors_tp_mv) == 0, writing_result_errors(errors_tp_mv)
+
+
+# if platform == "linux" or platform == "linux2":
+#     os.system("nano ./result_test.txt")
+# elif platform == "darwin": # OS X
+#     pass
+# elif platform == "win32": # Windows...
+#     pass
