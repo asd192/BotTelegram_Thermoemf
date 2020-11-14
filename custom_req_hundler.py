@@ -39,14 +39,10 @@ def separator_str_num(value):
 def is_number(num, from_separator=False):
     """ Преобразует в число, если число. Дробит на значения(Т, Ом или mV). """
     try:
-        if float(num):
-            if num.isdigit():
-                print('T')
-                num, num_str = int(num), 'T'
-            elif num[1:].isdigit():
+        if float(num) or float(num) == 0:
+            if num.isdigit() or num[1:].isdigit():
                 num, num_str = int(num), 'T'
             else:
-                print('R')
                 num, num_str = float(num), 'R'
             result = num if from_separator else (num, num_str)
 

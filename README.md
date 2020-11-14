@@ -28,9 +28,9 @@
 :black_square_button: <b>test_main.py</b> <br>
 </p>
 Тестирование преобразуемых значений ТП
-<pre>pytest -m tp --reruns 1 -s -v --tb=line test_main.py</pre>
+<pre>pytest -m tp -s -v --tb=line test_main.py</pre>
 Тестирование преобразуемых значений ТСМ
-<pre>pytest -m tsm --reruns 1 -s -v --tb=line test_main.py</pre>
+<pre>pytest -m tsm -s -v --tb=line test_main.py</pre>
 
 <h3>Точность</h3>
 <p>
