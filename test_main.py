@@ -19,17 +19,17 @@ def writing_result_errors(result_list):
 
 @pytest.mark.tp  # pytest -m tp test_main.py
 class TestMainPolinom():
-
-    tp = {
-        'R': ((-50, -0.226), (0, 0.000), (1064, 11.361), (1065, 11.375), (1768, 21.101)),
-        'S': ((-50, -0.236), (0, 0.000), (1064, 10.332), (1065, 10.344), (1768, 18.693)),
-        'B': ((250, 0.291), (630, 1.975), (631, 1.981), (1820, 13.820)),
-
-    }
-
     @pytest.mark.tp_t  # pytest -m tp_t test_main.py
     def test_tp_t(self):
-        global count_tests, count_tests_error
+
+        # TODO !!!
+        tp_t = {
+            'R': (-50, 0, 1064, 1065, 1664, 1665, 1768),
+            'S': (-50, 0, 1064, 1065, 1664, 1665, 1768),
+            'B': (250, 630, 631, 1820, 13.820),
+            'J': ()
+        }
+
         errors_tp_t = []
 
         for key, values in TestMainPolinom.tp.items():
@@ -51,9 +51,18 @@ class TestMainPolinom():
 
         assert len(errors_tp_t) == 0, writing_result_errors(errors_tp_t)
 
+
     @pytest.mark.tp_mv  # pytest -m tp_mv test_main.py
     def test_tp_mv(self):
-        global count_tests, count_tests_error
+
+        # TODO !!!
+        tp_mv = {
+            'R': (-0.255, 1.922, 1.924, 11.360, 11.362, 19.738, 19.740, 21.103),
+            'S': (),
+            'B': (),
+            'J': (())
+        }
+
         errors_tp_mv = []
 
         for key, values in TestMainPolinom.tp.items():
