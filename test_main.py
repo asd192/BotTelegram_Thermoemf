@@ -7,7 +7,7 @@ import pytest
 from processing_user_request import request_user
 
 
-@pytest.mark.tp # pytest -m tp -s -v --tb=line test_main.py
+@pytest.mark.tp  # pytest -m tp test_main.py
 class TestMainPolinom():
     tp = {
         'R': ((-50, -0.226), (0, 0.000), (1064, 11.361), (1065, 11.375), (1768, 21.101)),
@@ -15,11 +15,11 @@ class TestMainPolinom():
         'B': ((630, 1.975), (631, 1.981), (1820, 13.820)),
     }
 
-    @pytest.mark.tp_t
+    @pytest.mark.tp_t  # pytest -m tp_t test_main.py
     def test_tp_t(self):
         for key, values in TestMainPolinom.tp.items():
             for value in values:
-                standard = f"{round(value[1], 1)} mV({key})"
+                standard = f"{round(value[1], 3)} mV({key})"
 
                 request_1 = request_user(f'{value[0]} {key.upper()}')
                 assert request_1 == standard, "test 1-T: 20 K(верхний регистр)"
@@ -30,7 +30,7 @@ class TestMainPolinom():
                 request_3 = request_user(f'{float(value[0])}t {key}')
                 assert request_3 == standard, "test 3-T: 20.0t k(плавающая точка в температуре, ключ t)"
 
-    @pytest.mark.tp_mv
+    @pytest.mark.tp_mv  # pytest -m tp_mv test_main.py
     def test_tp_mv(self):
         for key, values in TestMainPolinom.tp.items():
             for value in values:
