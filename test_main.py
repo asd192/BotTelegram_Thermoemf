@@ -4,7 +4,7 @@
     0 для T(ТП, ТСМ)
 """
 import pytest
-from custom_req_hundler import request_user
+from processing_user_request import request_user
 from coefficients import coefficients
 from main_intplt_equations import Temperature, Resist
 
