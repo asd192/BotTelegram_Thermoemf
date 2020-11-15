@@ -106,7 +106,9 @@ class TestTP():
     @pytest.mark.tp_K
     def test_K(self):
         T = (-200, -170, -70, 30, 130, 230, 330, 430, 530, 630, 730, 830, 930, 1030, 1130, 1230, 1330)
-        mV = (-5.891, -5.354, -2.587, 1.203, 5.328, 9.343, 13.457, 17.667, 21.924, 26.179, 30.382, 34.501, 38.522, 42.44, 46.249, 49.926, 53.451)
+        mV = (
+        -5.891, -5.354, -2.587, 1.203, 5.328, 9.343, 13.457, 17.667, 21.924, 26.179, 30.382, 34.501, 38.522, 42.44,
+        46.249, 49.926, 53.451)
 
         for i in range(len(T)):
             t_standard = f"{mV[i]} mV(K)"
@@ -162,7 +164,7 @@ class TestTP():
 
             assert mv_standard == request_user(f"{mV[i]} A2")
             assert mv_standard == request_user(f"{mV[i]}r A2")
-            
+
     @pytest.mark.tp_A3
     def test_A3(self):
         T = (200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800)
@@ -192,7 +194,7 @@ class TestTP():
 
             assert mv_standard == request_user(f"{mV[i]} L")
             assert mv_standard == request_user(f"{mV[i]}r L")
-            
+
     @pytest.mark.tp_M
     def test_M(self):
         T = (-200, -170, -140, -110, -80, -50, -20, 10, 40, 70, 100)
@@ -213,15 +215,54 @@ class TestTP():
 class TestTSM():
     @pytest.mark.M50_426
     def test_M50_426(self):
-        pass
+        # TODO нет точных табличных данных
+        T = (-50, -1, 1, 200)
+        R = (39.35, 49.787, 50.213, 92.6)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(CU426)"
+            r_standard = f"{T[i]} °C(CU426)"
+
+            assert t_standard == request_user(f"{T[i]} 50M 426")
+            assert t_standard == request_user(f"{float(T[i])}t 50M 426")
+
+            assert r_standard == request_user(f"{R[i]} 50M 426")
+            assert r_standard == request_user(f"{R[i]}r 50M 426")
 
     @pytest.mark.M100_426
     def test_M100_426(self):
-        pass
+        T = (-50, -1, 1, 200)
+        R = (78.7, 99.574, 100.426, 185.2)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(CU426)"
+            r_standard = f"{T[i]} °C(CU426)"
+
+            assert t_standard == request_user(f"{T[i]} 100M 426")
+            assert t_standard == request_user(f"{float(T[i])}t 100M 426")
+
+            assert r_standard == request_user(f"{R[i]} 100M 426")
+            assert r_standard == request_user(f"{R[i]}r 100M 426")
 
     @pytest.mark.M50_428
     def test_M50_428(self):
-        pass
+        # TTODO нет точных табличных данных
+        T = (-180, -1, 1, 200)
+        R = (10.26, 49.79, 50.21, 92.8)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(CU428)"
+            r_standard = f"{T[i]} °C(CU428)"
+
+            assert t_standard == request_user(f"{T[i]} 50M")
+            assert t_standard == request_user(f"{T[i]} 50M 428")
+            assert t_standard == request_user(f"{float(T[i])}t 50M")
+            assert t_standard == request_user(f"{float(T[i])}t 50M 428")
+
+            assert r_standard == request_user(f"{R[i]} 50M")
+            assert r_standard == request_user(f"{R[i]} 50M 428")
+            assert r_standard == request_user(f"{R[i]}r 50M")
+            assert r_standard == request_user(f"{R[i]}r 50M 428")
 
     @pytest.mark.M100_428
     def test_M100_428(self):
@@ -242,17 +283,93 @@ class TestTSM():
             assert r_standard == request_user(f"{R[i]}r 100M")
             assert r_standard == request_user(f"{R[i]}r 100M 428")
 
-    @pytest.mark.Pt50
-    def test_Pt50(self):
-        pass
+    @pytest.mark.Pt50_385
+    def test_Pt50_385(self):
+        # TODO нет точных табличных данных
+        T = (-200, -1, 1, 850)
+        R = (9.26, 49.805, 50.195, 195.24)
 
-    @pytest.mark.Pt100
-    def test_Pt100(self):
-        pass
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(PT385)"
+            r_standard = f"{T[i]} °C(PT385)"
 
-    @pytest.mark.Ni
-    def test_Ni(self):
-        pass
+            assert t_standard == request_user(f"{T[i]} 50P 385")
+            assert t_standard == request_user(f"{float(T[i])}t 50P 385")
+
+            assert r_standard == request_user(f"{R[i]} 50P 385")
+            assert r_standard == request_user(f"{R[i]}r 50P 385")
+
+    @pytest.mark.Pt100_385
+    def test_Pt100_385(self):
+        T = (-200, -1, 1, 850)
+        R = (18.52, 99.61, 100.39, 390.48)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(PT385)"
+            r_standard = f"{T[i]} °C(PT385)"
+
+            assert t_standard == request_user(f"{T[i]} 100P 385")
+            assert t_standard == request_user(f"{float(T[i])}t 100P 385")
+
+            assert r_standard == request_user(f"{R[i]} 100P 385")
+            assert r_standard == request_user(f"{R[i]}r 100P 385")
+
+    @pytest.mark.Pt50_391
+    def test_Pt50_391(self):
+        T = (-200, -1, 1, 850)
+        R = (8.62, 49.8, 50.20, 197.58)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(PT391)"
+            r_standard = f"{T[i]} °C(PT391)"
+
+            assert t_standard == request_user(f"{T[i]} 50P")
+            assert t_standard == request_user(f"{T[i]} 50P 391")
+            assert t_standard == request_user(f"{float(T[i])}t 50P")
+            assert t_standard == request_user(f"{float(T[i])}t 50P 391")
+
+            assert r_standard == request_user(f"{R[i]} 50P")
+            assert r_standard == request_user(f"{R[i]} 50P 391")
+            assert r_standard == request_user(f"{R[i]}r 50P")
+            assert r_standard == request_user(f"{R[i]}r 50P 391")
+
+    @pytest.mark.Pt100_391
+    def test_Pt100_391(self):
+        T = (-200, -1, 1, 850)
+        R = (17.24, 99.60, 100.40, 395.16)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(PT391)"
+            r_standard = f"{T[i]} °C(PT391)"
+
+            assert t_standard == request_user(f"{T[i]} 100P")
+            assert t_standard == request_user(f"{T[i]} 100P 391")
+            assert t_standard == request_user(f"{float(T[i])}t 100P")
+            assert t_standard == request_user(f"{float(T[i])}t 100P 391")
+
+            assert r_standard == request_user(f"{R[i]} 100P")
+            assert r_standard == request_user(f"{R[i]} 100P 391")
+            assert r_standard == request_user(f"{R[i]}r 100P")
+            assert r_standard == request_user(f"{R[i]}r 100P 391")
+
+    @pytest.mark.Ni_100_617
+    def test_Ni_100_617(self):
+        T = (-60, 99, 101, 180)
+        R = (69.45, 161.03, 162.41, 223.21) # 101 - 162.41!
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(NI617)"
+            r_standard = f"{T[i]} °C(NI617)"
+
+            assert t_standard == request_user(f"{T[i]} 100NI")
+            assert t_standard == request_user(f"{T[i]} 100N")
+            assert t_standard == request_user(f"{float(T[i])}t 100N")
+            assert t_standard == request_user(f"{float(T[i])}t 100N")
+
+            assert r_standard == request_user(f"{R[i]} 100N")
+            assert r_standard == request_user(f"{R[i]} 100N")
+            assert r_standard == request_user(f"{R[i]}r 100N")
+            assert r_standard == request_user(f"{R[i]}r 100N")
 
 # if platform == "linux" or platform == "linux2":
 #     os.system("nano ./result_test.txt")

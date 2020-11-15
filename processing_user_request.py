@@ -77,9 +77,9 @@ def type_termo(value, type_value, type_grad, is_tp):
 
         if type_grad_str in 'MМ':
             grad = 'CU428'
-        if type_grad_str in 'PtП':
+        if type_grad_str in 'PTПТ':
             grad = 'PT391'
-        if type_grad_str in 'NiНИ':
+        if type_grad_str in 'NIНИ':
             grad = 'NI617'
 
         # определение ТСМ с False
@@ -136,6 +136,7 @@ def request_user(message):
             return error(msg, 'RecursionError')
 
 if __name__ == '__main__':
-    print(request_user('20.53 100M 428'))
+    print(request_user('78.7 100ni'))
+    print(request_user('-50 100n'))
     # print(request_user('-74.60t 100M'))
     # print(request_user('120,60r 100M 426'))
