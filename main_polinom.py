@@ -7,7 +7,6 @@ def polinom(value, coeff_coeff, K_Type):
     if not K_Type:
         polinom = [k * (value) ** n for n, k in enumerate(coeff_coeff)]
     else:
-        print('Type_K')
         polinom = [k * (value) ** n + (0.1185976 * exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
 
     return f"{sum(polinom)}"
@@ -46,5 +45,5 @@ def coeff_tp(graduation, value, coeff_type):
     return result
 
 if __name__ == "__main__":
-    print(coeff_tp('B', 1.975, 'mV'))
-    print(coeff_tp('B', 630, 'T'))
+    print(coeff_tp('A1', 0, 'mV'))
+    print(coeff_tp('A1', 0, 'T'))
