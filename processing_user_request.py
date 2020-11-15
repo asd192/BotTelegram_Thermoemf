@@ -128,6 +128,7 @@ def request_user(message):
             msg_processing = (*msg01, msg2, msg3)
             result = type_termo(*msg_processing)
 
+            # TODO не вызывать из test_main
             log_all(msg, result)
             return result
 
