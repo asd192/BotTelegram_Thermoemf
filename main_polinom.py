@@ -41,7 +41,6 @@ def coeff_tp(graduation, value, coeff_type):
 
     # сбор сообщения для отправки пользователю
     result = f"{poly} {type_value}({graduation})"
-
     return result
 
 if __name__ == "__main__":
