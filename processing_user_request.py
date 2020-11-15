@@ -136,6 +136,6 @@ def request_user(message):
             return error(msg, 'RecursionError')
 
 if __name__ == '__main__':
-    print(request_user('0.291 B'))
+    print(request_user('-50 R'))
     # print(request_user('-74.60t 100M'))
     # print(request_user('120,60r 100M 426'))
