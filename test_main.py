@@ -209,11 +209,51 @@ class TestTP():
             assert mv_standard == request_user(f"{mV[i]}r M")
 
 
-@pytest.mark.TSM  # pytest -m tp test_main.py
+@pytest.mark.TSM  # pytest -m TSM test_main.py
 class TestTSM():
-    @pytest.mark.tp_R
-    def test_R(self):
+    @pytest.mark.M50_426
+    def test_M50_426(self):
         pass
+
+    @pytest.mark.M100_426
+    def test_M100_426(self):
+        pass
+
+    @pytest.mark.M50_428
+    def test_M50_428(self):
+        pass
+
+    @pytest.mark.M100_428
+    def test_M100_428(self):
+        T = (-180, -1, 1, 200)
+        R = (20.53, 99.57, 100.43, 185.60)
+
+        for i in range(len(T)):
+            t_standard = f"{R[i]:.2f} Ом(CU428)"
+            r_standard = f"{T[i]} °C(CU428)"
+
+            assert t_standard == request_user(f"{T[i]} 100M")
+            assert t_standard == request_user(f"{T[i]} 100M 428")
+            assert t_standard == request_user(f"{float(T[i])}t 100M")
+            assert t_standard == request_user(f"{float(T[i])}t 100M 428")
+
+            assert r_standard == request_user(f"{R[i]} 100M")
+            assert r_standard == request_user(f"{R[i]} 100M 428")
+            assert r_standard == request_user(f"{R[i]}r 100M")
+            assert r_standard == request_user(f"{R[i]}r 100M 428")
+
+    @pytest.mark.Pt50
+    def test_Pt50(self):
+        pass
+
+    @pytest.mark.Pt100
+    def test_Pt100(self):
+        pass
+
+    @pytest.mark.Ni
+    def test_Ni(self):
+        pass
+
 # if platform == "linux" or platform == "linux2":
 #     os.system("nano ./result_test.txt")
 # elif platform == "darwin": # OS X

@@ -86,10 +86,10 @@ def type_termo(value, type_value, type_grad, is_tp):
         if str(type_grad[0]).isdigit() and not is_tp:
             if type_value in 'TТ':
                 result = Temperature.coeff[grad](value, float(type_grad_num))
-                return f"{result:.2f} Ом({grad.replace(grad[1], grad[1].lower())})"
+                return f"{result:.2f} Ом({grad})"
             if type_value not in 'TТ':
                 result = Resist.coeff[grad](value, float(type_grad_num))
-                return f"{result:.1f} °C({grad.replace(grad[1], grad[1].lower())})"
+                return f"{round(result)} °C({grad})"
 
         # определение ТСМ без False
         if str(type_grad[0]).isdigit() and is_tp in '426428385391':
@@ -111,7 +111,7 @@ def type_termo(value, type_value, type_grad, is_tp):
                 return f"{result:.2f} Ом({grad})"
             if type_value not in 'TТ':
                 result = Resist.coeff[grad](value, float(type_grad_num))
-                return f"{result:.1f} °C({grad})"
+                return f"{round(result)} °C({grad})"
 
 
 def request_user(message):
@@ -136,6 +136,6 @@ def request_user(message):
             return error(msg, 'RecursionError')
 
 if __name__ == '__main__':
-    print(request_user('0 A1'))
+    print(request_user('20.53 100M 428'))
     # print(request_user('-74.60t 100M'))
     # print(request_user('120,60r 100M 426'))
