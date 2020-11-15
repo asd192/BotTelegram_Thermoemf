@@ -45,5 +45,5 @@ def coeff_tp(graduation, value, coeff_type):
     return result
 
 if __name__ == "__main__":
-    print(coeff_tp('R', -0.226, 'mV'))
-    print(coeff_tp('A1', 0, 'T'))
+    print(coeff_tp('L', 49.108, 'mV'))
+    print(coeff_tp('L', 600, 'T'))

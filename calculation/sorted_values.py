@@ -9,13 +9,13 @@ s1, s2 = [], []
 
 for i, v in enumerate(s):
     s1.append(v)
-    s2.append(i +250)
+    s2.append(i - 200)
 
 print(len(s1))
 print(s1)
 print(s2)
 
-step = 150
+step = 30
 s1 = tuple(s1[::step])
 s2 = tuple(s2[::step])
 
