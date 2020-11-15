@@ -9,9 +9,9 @@ from main_intplt_equations import Temperature, Resist
 
 from phrase_dict import phrase
 
-# TODO переделать на log_all
-def error(user_message, my_message=None):
-    """ Обработка ошибок """
+
+def log_all(user_message, my_message=None):
+    """ лог сообщений """
     while True:
         try:
             with open("get_log.lock", "x"):
@@ -118,7 +118,7 @@ def request_user(message):
     """ Обрабатывает сообщение пользователя """
     msg = message.split()
     if len(msg) < 2 or len(msg) > 4:
-        return error(msg)
+        return log_all(msg, 'LenError')
     else:
         try:
             msg01 = is_number(msg[0].replace(',', '.').upper())
@@ -128,12 +128,15 @@ def request_user(message):
             msg_processing = (*msg01, msg2, msg3)
             result = type_termo(*msg_processing)
 
+            log_all(msg, result)
             return result
 
         except IndexError:
-            return error(msg, 'IndexError')
+            return log_all(msg, 'IndexError')
         except RecursionError:
-            return error(msg, 'RecursionError')
+            return log_all(msg, 'RecursionError')
+        except:
+            return log_all(msg, 'Except')
 
 if __name__ == '__main__':
     print(request_user('78.7 100ni'))

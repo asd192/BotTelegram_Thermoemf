@@ -3,6 +3,7 @@ from telebot import types
 
 from phrase_dict import phrase
 from processing_user_request import request_user
+from processing_user_request import log_all
 
 with open("API-Token.txt", "r", encoding="UTF8") as token:
     token = token.readlines()[1].strip()
