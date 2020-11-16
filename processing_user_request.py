@@ -49,8 +49,7 @@ def is_number(num, from_separator=False):
             return result
     except ValueError:
         # если число с указанием типа, отделяем число
-        num_num = separator_str_num(num)[0]
-        num_str = separator_str_num(num)[1]
+        num_num, num_str = separator_str_num(num)
 
         return (is_number(num_num, from_separator=True), num_str)
 
