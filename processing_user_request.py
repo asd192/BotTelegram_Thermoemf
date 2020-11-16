@@ -11,7 +11,7 @@ from phrase_dict import phrase
 
 
 def log_all(user_message, my_message=None):
-    """ лог сообщений """
+    """ Лог сообщений """
     while True:
         try:
             with open("get_log.lock", "x"):
@@ -63,7 +63,7 @@ def type_termo(value, type_value, type_grad, is_tp):
         if type_value in 'TТ':
             return coeff_tp(type_grad, value, 'T')
         elif type_value not in 'TТ':
-             return coeff_tp(type_grad, value, 'mV')
+            return coeff_tp(type_grad, value, 'mV')
         else:
             if type(value) is int:
                 coeff_type = 'T'
@@ -95,11 +95,11 @@ def type_termo(value, type_value, type_grad, is_tp):
         if str(type_grad[0]).isdigit() and is_tp in '426428385391':
             ### переопределяем пользовательский коэффициент на правильный ###
             g = {
-                385: (385, 38, 35, 5),
-                391: (391, 31, 91, 9),
-                426: (426, 46, 6),
-                428: (428, 48, 8),
-                617: (617, 61, 67, 7)
+                385: (385, 38, 83, 35, 53, 5),
+                391: (391, 31, 13, 91, 19, 9),
+                426: (426, 64, 46, 6),
+                428: (428, 48, 84, 8),
+                617: (617, 61, 16, 67, 76, 7)
             }
 
             alpha = [k for k, i in g.items() if int(is_tp) in i][0]
@@ -128,7 +128,7 @@ def request_user(message):
             msg_processing = (*msg01, msg2, msg3)
             result = type_termo(*msg_processing)
 
-            # TODO не вызывать из test_main
+            # FIXME не вызывать из test_main
             log_all(msg, result)
             return result
 
@@ -139,8 +139,11 @@ def request_user(message):
         except:
             return log_all(msg, 'Except')
 
+
 if __name__ == '__main__':
-    print(request_user('78.7 100ni'))
-    print(request_user('-50 100n'))
-    # print(request_user('-74.60t 100M'))
-    # print(request_user('120,60r 100M 426'))
+    print(request_user('78.6 100ni'))
+    print(request_user('-41 100n'))
+    print(request_user('39.3 50ni'))
+    print(request_user('-41 50n'))
+    print(request_user('50.0t 50M'))
+    print(request_user('50 100M'))

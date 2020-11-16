@@ -7,7 +7,6 @@ from processing_user_request import request_user
 
 with open("API-Token.txt", "r", encoding="UTF8") as token:
     token = token.readlines()[1].strip()
-
 bot = telebot.TeleBot(token)
 
 
