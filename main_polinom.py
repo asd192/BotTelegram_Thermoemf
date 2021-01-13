@@ -39,7 +39,6 @@ def coeff_tp(graduation, value, coeff_type):
         poly = round(float(polinom(value, coeff_coeff, K_type)), 3)
         type_value = 'mV'
 
-    # сбор сообщения для отправки пользователю
     result = f"{poly} {type_value}({graduation})"
     return result
 
