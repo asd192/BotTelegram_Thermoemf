@@ -12,7 +12,7 @@
 <h3>Файлы</h3>
 
 <p>
-:white_check_mark: main_bot — бот<br>
+:white_check_mark: <b>main_bot</b> — бот<br>
 :white_check_mark: <b>custom_req_hundler</b> — обработка сообщений<br>
 :white_check_mark: <b>main_polinom.py</b> — рассчеты полиномов в зависимости от типа ТП и значения<br>
 :white_check_mark: <b>main_intplt_equations.py</b> — интерполяцилнные уравнения для Cu, Ni, Pt термометров сопротивления в зависимости от типа и значения<br>

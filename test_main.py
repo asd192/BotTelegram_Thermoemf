@@ -5,6 +5,8 @@
     0 для T(ТП, ТСМ)
 """
 
+# TODO добавить граничные значения
+
 import os
 from sys import platform
 
