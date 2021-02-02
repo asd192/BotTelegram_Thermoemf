@@ -113,7 +113,7 @@ def type_termo(value, type_value, type_grad, is_tp):
                 return f"{round(result)} °C({grad})"
 
 
-def request_user(message):
+def request_user(message, log=True):
     """ Обрабатывает сообщение пользователя """
     msg = message.split()
     if len(msg) < 2 or len(msg) > 4:
@@ -127,16 +127,13 @@ def request_user(message):
             msg_processing = (*msg01, msg2, msg3)
             result = type_termo(*msg_processing)
 
-            # FIXME не вызывать из test_main
-            log_all(msg, result)
+            if log:
+                log_all(msg, result)
+
             return result
 
-        except IndexError:
-            return log_all(msg, 'IndexError')
-        except RecursionError:
-            return log_all(msg, 'RecursionError')
-        except:
-            return log_all(msg, 'Except')
+        except Exception:
+            return log_all(msg, Exception.__name__)
 
 
 if __name__ == '__main__':

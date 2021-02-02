@@ -1,4 +1,7 @@
 """ Тестирование возращаемых значений на соответствие с ГОСТ(табличные данные).
+
+pytest test_main.py
+
 Точность:
     0.000 для mV(ТП)
     0.00 для Ом(ТСМ)
@@ -25,11 +28,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(R)"
             mv_standard = f"{T[i]} °C(R)"
 
-            assert t_standard == request_user(f"{T[i]} R"), "T1"
-            assert t_standard == request_user(f"{float(T[i])}t R"), "T2"
+            assert t_standard == request_user(f"{T[i]} R", False)
+            assert t_standard == request_user(f"{float(T[i])}t R", False)
 
-            assert mv_standard == request_user(f"{mV[i]} R"), "R1"
-            assert mv_standard == request_user(f"{mV[i]}r R"), "R2"
+            assert mv_standard == request_user(f"{mV[i]} R", False)
+            assert mv_standard == request_user(f"{mV[i]}r R", False)
 
     @pytest.mark.tp_S
     def test_S(self):
@@ -40,12 +43,13 @@ class TestTP():
             t_standard = f"{mV[i]} mV(S)"
             mv_standard = f"{T[i]} °C(S)"
 
-            assert t_standard == request_user(f"{T[i]} S")
-            assert t_standard == request_user(f"{float(T[i])}t S")
+            assert t_standard == request_user(f"{T[i]} S", False)
+            assert t_standard == request_user(f"{float(T[i])}t S", False)
 
-            assert mv_standard == request_user(f"{mV[i]} S")
-            assert mv_standard == request_user(f"{mV[i]}r S")
+            assert mv_standard == request_user(f"{mV[i]} S", False)
+            assert mv_standard == request_user(f"{mV[i]}r S", False)
 
+    @pytest.mark.xfail
     @pytest.mark.tp_B
     def test_B(self):
         T = (250, 400, 550, 700, 850, 1000, 1150, 1300, 1450, 1600, 1750)
@@ -55,11 +59,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(B)"
             mv_standard = f"{T[i]} °C(B)"
 
-            assert t_standard == request_user(f"{T[i]} B")
-            assert t_standard == request_user(f"{float(T[i])}t B")
+            assert t_standard == request_user(f"{T[i]} B", False)
+            assert t_standard == request_user(f"{float(T[i])}t B", False)
 
-            assert mv_standard == request_user(f"{mV[i]} B")
-            assert mv_standard == request_user(f"{mV[i]}r B")
+            assert mv_standard == request_user(f"{mV[i]} B", False)
+            assert mv_standard == request_user(f"{mV[i]}r B", False)
 
     @pytest.mark.tp_J
     def test_J(self):
@@ -70,11 +74,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(J)"
             mv_standard = f"{T[i]} °C(J)"
 
-            assert t_standard == request_user(f"{T[i]} J")
-            assert t_standard == request_user(f"{float(T[i])}t J")
+            assert t_standard == request_user(f"{T[i]} J", False)
+            assert t_standard == request_user(f"{float(T[i])}t J", False)
 
-            assert mv_standard == request_user(f"{mV[i]} J")
-            assert mv_standard == request_user(f"{mV[i]}r J")
+            assert mv_standard == request_user(f"{mV[i]} J", False)
+            assert mv_standard == request_user(f"{mV[i]}r J", False)
 
     @pytest.mark.tp_T
     def test_T(self):
@@ -85,11 +89,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(T)"
             mv_standard = f"{T[i]} °C(T)"
 
-            assert t_standard == request_user(f"{T[i]} T")
-            assert t_standard == request_user(f"{float(T[i])}t T")
+            assert t_standard == request_user(f"{T[i]} T", False)
+            assert t_standard == request_user(f"{float(T[i])}t T", False)
 
-            assert mv_standard == request_user(f"{mV[i]} T")
-            assert mv_standard == request_user(f"{mV[i]}r T")
+            assert mv_standard == request_user(f"{mV[i]} T", False)
+            assert mv_standard == request_user(f"{mV[i]}r T", False)
 
     @pytest.mark.tp_E
     def test_E(self):
@@ -100,11 +104,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(E)"
             mv_standard = f"{T[i]} °C(E)"
 
-            assert t_standard == request_user(f"{T[i]} E")
-            assert t_standard == request_user(f"{float(T[i])}t E")
+            assert t_standard == request_user(f"{T[i]} E", False)
+            assert t_standard == request_user(f"{float(T[i])}t E", False)
 
-            assert mv_standard == request_user(f"{mV[i]} E")
-            assert mv_standard == request_user(f"{mV[i]}r E")
+            assert mv_standard == request_user(f"{mV[i]} E", False)
+            assert mv_standard == request_user(f"{mV[i]}r E", False)
 
     @pytest.mark.tp_K
     def test_K(self):
@@ -117,11 +121,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(K)"
             mv_standard = f"{T[i]} °C(K)"
 
-            assert t_standard == request_user(f"{T[i]} K")
-            assert t_standard == request_user(f"{float(T[i])}t K")
+            assert t_standard == request_user(f"{T[i]} K", False)
+            assert t_standard == request_user(f"{float(T[i])}t K", False)
 
-            assert mv_standard == request_user(f"{mV[i]} K")
-            assert mv_standard == request_user(f"{mV[i]}r K")
+            assert mv_standard == request_user(f"{mV[i]} K", False)
+            assert mv_standard == request_user(f"{mV[i]}r K", False)
 
     @pytest.mark.tp_N
     def test_N(self):
@@ -132,12 +136,13 @@ class TestTP():
             t_standard = f"{mV[i]} mV(N)"
             mv_standard = f"{T[i]} °C(N)"
 
-            assert t_standard == request_user(f"{T[i]} N")
-            assert t_standard == request_user(f"{float(T[i])}t N")
+            assert t_standard == request_user(f"{T[i]} N", False)
+            assert t_standard == request_user(f"{float(T[i])}t N", False)
 
-            assert mv_standard == request_user(f"{mV[i]} N")
-            assert mv_standard == request_user(f"{mV[i]}r N")
+            assert mv_standard == request_user(f"{mV[i]} N", False)
+            assert mv_standard == request_user(f"{mV[i]}r N", False)
 
+    @pytest.mark.xfail
     @pytest.mark.tp_A1
     def test_A1(self):
         T = (200, 400, 600, 800, 1000, 1200, 1400, 1600, 1800, 2000, 2200, 2400)
@@ -147,11 +152,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(A1)"
             mv_standard = f"{T[i]} °C(A1)"
 
-            assert t_standard == request_user(f"{T[i]} A1")
-            assert t_standard == request_user(f"{float(T[i])}t A1")
+            assert t_standard == request_user(f"{T[i]} A1", False)
+            assert t_standard == request_user(f"{float(T[i])}t A1", False)
 
-            assert mv_standard == request_user(f"{mV[i]} A1")
-            assert mv_standard == request_user(f"{mV[i]}r A1")
+            assert mv_standard == request_user(f"{mV[i]} A1", False)
+            assert mv_standard == request_user(f"{mV[i]}r A1", False)
 
     @pytest.mark.tp_A2
     def test_A2(self):
@@ -162,11 +167,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(A2)"
             mv_standard = f"{T[i]} °C(A2)"
 
-            assert t_standard == request_user(f"{T[i]} A2")
-            assert t_standard == request_user(f"{float(T[i])}t A2")
+            assert t_standard == request_user(f"{T[i]} A2", False)
+            assert t_standard == request_user(f"{float(T[i])}t A2", False)
 
-            assert mv_standard == request_user(f"{mV[i]} A2")
-            assert mv_standard == request_user(f"{mV[i]}r A2")
+            assert mv_standard == request_user(f"{mV[i]} A2", False)
+            assert mv_standard == request_user(f"{mV[i]}r A2", False)
 
     @pytest.mark.tp_A3
     def test_A3(self):
@@ -177,11 +182,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(A3)"
             mv_standard = f"{T[i]} °C(A3)"
 
-            assert t_standard == request_user(f"{T[i]} A3")
-            assert t_standard == request_user(f"{float(T[i])}t A3")
+            assert t_standard == request_user(f"{T[i]} A3", False)
+            assert t_standard == request_user(f"{float(T[i])}t A3", False)
 
-            assert mv_standard == request_user(f"{mV[i]} A3")
-            assert mv_standard == request_user(f"{mV[i]}r A3")
+            assert mv_standard == request_user(f"{mV[i]} A3", False)
+            assert mv_standard == request_user(f"{mV[i]}r A3", False)
 
     @pytest.mark.tp_L
     def test_L(self):
@@ -192,11 +197,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(L)"
             mv_standard = f"{T[i]} °C(L)"
 
-            assert t_standard == request_user(f"{T[i]} L")
-            assert t_standard == request_user(f"{float(T[i])}t L")
+            assert t_standard == request_user(f"{T[i]} L", False)
+            assert t_standard == request_user(f"{float(T[i])}t L", False)
 
-            assert mv_standard == request_user(f"{mV[i]} L")
-            assert mv_standard == request_user(f"{mV[i]}r L")
+            assert mv_standard == request_user(f"{mV[i]} L", False)
+            assert mv_standard == request_user(f"{mV[i]}r L", False)
 
     @pytest.mark.tp_M
     def test_M(self):
@@ -207,11 +212,11 @@ class TestTP():
             t_standard = f"{mV[i]} mV(M)"
             mv_standard = f"{T[i]} °C(M)"
 
-            assert t_standard == request_user(f"{T[i]} M")
-            assert t_standard == request_user(f"{float(T[i])}t M")
+            assert t_standard == request_user(f"{T[i]} M", False)
+            assert t_standard == request_user(f"{float(T[i])}t M", False)
 
-            assert mv_standard == request_user(f"{mV[i]} M")
-            assert mv_standard == request_user(f"{mV[i]}r M")
+            assert mv_standard == request_user(f"{mV[i]} M", False)
+            assert mv_standard == request_user(f"{mV[i]}r M", False)
 
 
 @pytest.mark.TSM  # pytest -m TSM test_main.py
@@ -226,11 +231,11 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(CU426)"
             r_standard = f"{T[i]} °C(CU426)"
 
-            assert t_standard == request_user(f"{T[i]} 50M 426")
-            assert t_standard == request_user(f"{float(T[i])}t 50M 426")
+            assert t_standard == request_user(f"{T[i]} 50M 426", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50M 426", False)
 
-            assert r_standard == request_user(f"{R[i]} 50M 426")
-            assert r_standard == request_user(f"{R[i]}r 50M 426")
+            assert r_standard == request_user(f"{R[i]} 50M 426", False)
+            assert r_standard == request_user(f"{R[i]}r 50M 426", False)
 
     @pytest.mark.M100_426
     def test_M100_426(self):
@@ -241,11 +246,11 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(CU426)"
             r_standard = f"{T[i]} °C(CU426)"
 
-            assert t_standard == request_user(f"{T[i]} 100M 426")
-            assert t_standard == request_user(f"{float(T[i])}t 100M 426")
+            assert t_standard == request_user(f"{T[i]} 100M 426", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100M 426", False)
 
-            assert r_standard == request_user(f"{R[i]} 100M 426")
-            assert r_standard == request_user(f"{R[i]}r 100M 426")
+            assert r_standard == request_user(f"{R[i]} 100M 426", False)
+            assert r_standard == request_user(f"{R[i]}r 100M 426", False)
 
     @pytest.mark.M50_428
     def test_M50_428(self):
@@ -257,15 +262,15 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(CU428)"
             r_standard = f"{T[i]} °C(CU428)"
 
-            assert t_standard == request_user(f"{T[i]} 50M")
-            assert t_standard == request_user(f"{T[i]} 50M 428")
-            assert t_standard == request_user(f"{float(T[i])}t 50M")
-            assert t_standard == request_user(f"{float(T[i])}t 50M 428")
+            assert t_standard == request_user(f"{T[i]} 50M", False)
+            assert t_standard == request_user(f"{T[i]} 50M 428", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50M", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50M 428", False)
 
-            assert r_standard == request_user(f"{R[i]} 50M")
-            assert r_standard == request_user(f"{R[i]} 50M 428")
-            assert r_standard == request_user(f"{R[i]}r 50M")
-            assert r_standard == request_user(f"{R[i]}r 50M 428")
+            assert r_standard == request_user(f"{R[i]} 50M", False)
+            assert r_standard == request_user(f"{R[i]} 50M 428", False)
+            assert r_standard == request_user(f"{R[i]}r 50M", False)
+            assert r_standard == request_user(f"{R[i]}r 50M 428", False)
 
     @pytest.mark.M100_428
     def test_M100_428(self):
@@ -276,15 +281,15 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(CU428)"
             r_standard = f"{T[i]} °C(CU428)"
 
-            assert t_standard == request_user(f"{T[i]} 100M")
-            assert t_standard == request_user(f"{T[i]} 100M 428")
-            assert t_standard == request_user(f"{float(T[i])}t 100M")
-            assert t_standard == request_user(f"{float(T[i])}t 100M 428")
+            assert t_standard == request_user(f"{T[i]} 100M", False)
+            assert t_standard == request_user(f"{T[i]} 100M 428", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100M", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100M 428", False)
 
-            assert r_standard == request_user(f"{R[i]} 100M")
-            assert r_standard == request_user(f"{R[i]} 100M 428")
-            assert r_standard == request_user(f"{R[i]}r 100M")
-            assert r_standard == request_user(f"{R[i]}r 100M 428")
+            assert r_standard == request_user(f"{R[i]} 100M", False)
+            assert r_standard == request_user(f"{R[i]} 100M 428", False)
+            assert r_standard == request_user(f"{R[i]}r 100M", False)
+            assert r_standard == request_user(f"{R[i]}r 100M 428", False)
 
     @pytest.mark.Pt50_385
     def test_Pt50_385(self):
@@ -296,11 +301,11 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(PT385)"
             r_standard = f"{T[i]} °C(PT385)"
 
-            assert t_standard == request_user(f"{T[i]} 50P 385")
-            assert t_standard == request_user(f"{float(T[i])}t 50P 385")
+            assert t_standard == request_user(f"{T[i]} 50P 385", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50P 385", False)
 
-            assert r_standard == request_user(f"{R[i]} 50P 385")
-            assert r_standard == request_user(f"{R[i]}r 50P 385")
+            assert r_standard == request_user(f"{R[i]} 50P 385", False)
+            assert r_standard == request_user(f"{R[i]}r 50P 385", False)
 
     @pytest.mark.Pt100_385
     def test_Pt100_385(self):
@@ -311,11 +316,11 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(PT385)"
             r_standard = f"{T[i]} °C(PT385)"
 
-            assert t_standard == request_user(f"{T[i]} 100P 385")
-            assert t_standard == request_user(f"{float(T[i])}t 100P 385")
+            assert t_standard == request_user(f"{T[i]} 100P 385", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100P 385", False)
 
-            assert r_standard == request_user(f"{R[i]} 100P 385")
-            assert r_standard == request_user(f"{R[i]}r 100P 385")
+            assert r_standard == request_user(f"{R[i]} 100P 385", False)
+            assert r_standard == request_user(f"{R[i]}r 100P 385", False)
 
     @pytest.mark.Pt50_391
     def test_Pt50_391(self):
@@ -326,15 +331,15 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(PT391)"
             r_standard = f"{T[i]} °C(PT391)"
 
-            assert t_standard == request_user(f"{T[i]} 50P")
-            assert t_standard == request_user(f"{T[i]} 50P 391")
-            assert t_standard == request_user(f"{float(T[i])}t 50P")
-            assert t_standard == request_user(f"{float(T[i])}t 50P 391")
+            assert t_standard == request_user(f"{T[i]} 50P", False)
+            assert t_standard == request_user(f"{T[i]} 50P 391", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50P", False)
+            assert t_standard == request_user(f"{float(T[i])}t 50P 391", False)
 
-            assert r_standard == request_user(f"{R[i]} 50P")
-            assert r_standard == request_user(f"{R[i]} 50P 391")
-            assert r_standard == request_user(f"{R[i]}r 50P")
-            assert r_standard == request_user(f"{R[i]}r 50P 391")
+            assert r_standard == request_user(f"{R[i]} 50P", False)
+            assert r_standard == request_user(f"{R[i]} 50P 391", False)
+            assert r_standard == request_user(f"{R[i]}r 50P", False)
+            assert r_standard == request_user(f"{R[i]}r 50P 391", False)
 
     @pytest.mark.Pt100_391
     def test_Pt100_391(self):
@@ -345,15 +350,15 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(PT391)"
             r_standard = f"{T[i]} °C(PT391)"
 
-            assert t_standard == request_user(f"{T[i]} 100P")
-            assert t_standard == request_user(f"{T[i]} 100P 391")
-            assert t_standard == request_user(f"{float(T[i])}t 100P")
-            assert t_standard == request_user(f"{float(T[i])}t 100P 391")
+            assert t_standard == request_user(f"{T[i]} 100P", False)
+            assert t_standard == request_user(f"{T[i]} 100P 391", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100P", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100P 391", False)
 
-            assert r_standard == request_user(f"{R[i]} 100P")
-            assert r_standard == request_user(f"{R[i]} 100P 391")
-            assert r_standard == request_user(f"{R[i]}r 100P")
-            assert r_standard == request_user(f"{R[i]}r 100P 391")
+            assert r_standard == request_user(f"{R[i]} 100P", False)
+            assert r_standard == request_user(f"{R[i]} 100P 391", False)
+            assert r_standard == request_user(f"{R[i]}r 100P", False)
+            assert r_standard == request_user(f"{R[i]}r 100P 391", False)
 
     @pytest.mark.Ni_100_617
     def test_Ni_100_617(self):
@@ -364,15 +369,15 @@ class TestTSM():
             t_standard = f"{R[i]:.2f} Ом(NI617)"
             r_standard = f"{T[i]} °C(NI617)"
 
-            assert t_standard == request_user(f"{T[i]} 100NI")
-            assert t_standard == request_user(f"{T[i]} 100N")
-            assert t_standard == request_user(f"{float(T[i])}t 100N")
-            assert t_standard == request_user(f"{float(T[i])}t 100N")
+            assert t_standard == request_user(f"{T[i]} 100NI", False)
+            assert t_standard == request_user(f"{T[i]} 100N", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100N", False)
+            assert t_standard == request_user(f"{float(T[i])}t 100N", False)
 
-            assert r_standard == request_user(f"{R[i]} 100N")
-            assert r_standard == request_user(f"{R[i]} 100N")
-            assert r_standard == request_user(f"{R[i]}r 100N")
-            assert r_standard == request_user(f"{R[i]}r 100N")
+            assert r_standard == request_user(f"{R[i]} 100N", False)
+            assert r_standard == request_user(f"{R[i]} 100N", False)
+            assert r_standard == request_user(f"{R[i]}r 100N", False)
+            assert r_standard == request_user(f"{R[i]}r 100N", False)
 
 # if platform == "linux" or platform == "linux2":
 #     os.system("nano ./result_test.txt")
