@@ -100,7 +100,7 @@ class Resist:
 
     def Ni617(r, R0=100):
         """ Никеливые ТС и ЧЭ, α = 0,00385°С """
-        D_low = (-233.1, 2.860, -0.0053) # не ГОСТ
+        D_low = (-233.1, 2.860, -0.0053)  # не ГОСТ
         D_hig = (144.096, -25.502, 4.4876)
 
         if r < R0:
@@ -113,7 +113,7 @@ class Resist:
 
     coeff = {'PT385': Pt385, 'PT391': Pt391, 'CU426': Cu426, 'CU428': Cu428, 'NI617': Ni617}
 
+
 if __name__ == "__main__":
     print(Temperature.coeff['CU428'](-100, 50))
     print(Resist.coeff['CU428'](28.27, 50))
-

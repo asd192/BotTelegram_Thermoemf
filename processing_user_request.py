@@ -1,12 +1,10 @@
-import random
 import datetime
+import random
 from os import remove
 
 from coefficients import coefficients
-from main_polinom import coeff_tp
-
 from main_intplt_equations import Temperature, Resist
-
+from main_polinom import coeff_tp
 from phrase_dict import phrase
 
 

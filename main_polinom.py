@@ -1,4 +1,5 @@
 from math import exp
+
 from coefficients import coefficients
 
 
@@ -7,7 +8,8 @@ def polinom(value, coeff_coeff, K_Type):
     if not K_Type:
         polinom = [k * (value) ** n for n, k in enumerate(coeff_coeff)]
     else:
-        polinom = [k * (value) ** n + (0.1185976 * exp(-0.0001183432 * ((value - 126.9686)**2))) for n, k in enumerate(coeff_coeff)]
+        polinom = [k * (value) ** n + (0.1185976 * exp(-0.0001183432 * ((value - 126.9686) ** 2))) for n, k in
+                   enumerate(coeff_coeff)]
 
     return f"{sum(polinom)}"
 
@@ -41,6 +43,7 @@ def coeff_tp(graduation, value, coeff_type):
 
     result = f"{poly} {type_value}({graduation})"
     return result
+
 
 if __name__ == "__main__":
     print(coeff_tp('L', 49.108, 'mV'))
